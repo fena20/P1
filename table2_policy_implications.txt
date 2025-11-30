@@ -1,0 +1,51 @@
+
+================================================================================
+TABLE 2: POLICY IMPLICATIONS & SDG ALIGNMENT
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ SDG TARGET          │ CONTRIBUTION                │ QUANTIFIED IMPACT       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ SDG 7               │ Reduced energy demand       │ 3.6% energy reduction    │
+│ Affordable &        │ through optimized thermal   │ 184 kWh/year saved       │
+│ Clean Energy        │ setpoint management         │                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ SDG 11              │ Grid peak load reduction    │ 15-20% peak shaving     │
+│ Sustainable         │ through demand-side         │ potential via thermal   │
+│ Cities              │ management strategies       │ mass utilization        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ SDG 13              │ Direct CO₂ emission         │ 43 kgCO₂/year reduced   │
+│ Climate             │ reduction through energy    │ per dwelling unit       │
+│ Action              │ efficiency gains            │                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ Net-Zero            │ Pathway to carbon-neutral   │ If scaled to 1M homes:  │
+│ Buildings           │ buildings via physics-      │ 42.9 ktCO₂/year        │
+│ Goal                │ informed AI optimization    │ abatement potential     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+KEY POLICY RECOMMENDATIONS:
+───────────────────────────
+1. BUILDING CODES: Mandate smart thermostat integration with ML-based
+   optimization for new constructions (potential 10-20% energy reduction).
+
+2. RETROFIT INCENTIVES: Provide financial incentives for existing buildings
+   to adopt AI-driven BEMS (Building Energy Management Systems).
+   
+3. GRID INTEGRATION: Encourage demand response programs leveraging
+   predictive models for grid stability during peak hours.
+
+4. CARBON PRICING: Framework demonstrates 3.6% emission reduction,
+   supporting carbon credit schemes for residential sector.
+
+RESEARCH IMPLICATIONS:
+──────────────────────
+• Quantile TabNet provides comparable accuracy to ensemble methods with
+  superior interpretability, enabling trust in AI-driven building automation.
+  
+• Physics-informed features (thermal gradient, dew point) improve model
+  generalizability and align predictions with thermodynamic principles.
+  
+• Multi-objective optimization (NSGA-II + TOPSIS) enables rational trade-off
+  decisions between energy efficiency and occupant comfort.
+
+================================================================================

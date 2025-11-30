@@ -1,0 +1,47 @@
+
+================================================================================
+TABLE 2: ENHANCED POLICY IMPLICATIONS & SDG ALIGNMENT
+================================================================================
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ SDG TARGET         │ CONTRIBUTION               │ QUANTIFIED IMPACT          │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ SDG 7              │ Reduced energy demand      │ 14.4% (TOPSIS) to        │
+│ Affordable &       │ through optimized thermal  │ 25.0% (Aggressive)        │
+│ Clean Energy       │ setpoint management        │ energy reduction           │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ SDG 11             │ Grid peak load reduction   │ 15-25% peak shaving        │
+│ Sustainable        │ through demand-side        │ potential via thermal      │
+│ Cities             │ management + load shifting │ mass utilization           │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ SDG 13             │ Direct CO₂ emission        │ 172 kg (TOPSIS) to       │
+│ Climate            │ reduction through energy   │ 299 kg (Aggressive)     │
+│ Action             │ efficiency gains           │ CO₂/year per dwelling      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Net-Zero           │ Pathway to carbon-neutral  │ If scaled to 1M homes:     │
+│ Buildings          │ buildings via physics-     │ 0-172 ktCO₂/year      │
+│ Goal               │ informed AI optimization   │ abatement potential        │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+IMPLEMENTATION STRATEGIES FOR 10-20% SAVINGS:
+─────────────────────────────────────────────
+1. ZONE-BASED SETBACK: Reduce temperature in unoccupied zones by 2-4°C
+   → Expected savings: 5-10%
+
+2. OCCUPANCY SCHEDULING: Use predictive models to pre-heat/cool
+   → Expected savings: 3-7%
+
+3. THERMAL MASS UTILIZATION: Shift loads to off-peak periods
+   → Expected savings: 2-5%
+
+4. SMART INTEGRATION: Combine all strategies with ML optimization
+   → Combined savings: 10-20%+
+
+COST-BENEFIT ANALYSIS:
+──────────────────────
+• Retrofit Cost: €1,500-3,000 (smart thermostats + sensors)
+• Annual Savings: €111-193 (at €0.15/kWh)
+• Payback Period: 27.1-7.8 years
+• Carbon Credit Value: €9-15/year (at €50/tCO₂)
+
+================================================================================
