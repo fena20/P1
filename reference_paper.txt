@@ -1,0 +1,876 @@
+                                                                 Energy and Buildings 140 (2017) 81–97
+
+
+
+                                                             Contents lists available at ScienceDirect
+
+
+                                                               Energy and Buildings
+                                              journal homepage: www.elsevier.com/locate/enbuild
+
+
+
+
+Data driven prediction models of energy use of appliances in a
+low-energy house
+Luis M. Candanedo ∗ , Véronique Feldheim, Dominique Deramaix
+Thermal Engineering and Combustion Laboratory, University of Mons, Rue de l’ Epargne 56, 7000 Mons, Belgium
+
+
+
+
+a r t i c l e        i n f o                           a b s t r a c t
+
+Article history:                                      This paper presents and discusses data-driven predictive models for the energy use of appliances. Data
+Received 20 September 2016                            used include measurements of temperature and humidity sensors from a wireless network, weather from
+Received in revised form                              a nearby airport station and recorded energy use of lighting ﬁxtures. The paper discusses data ﬁltering
+26 December 2016
+                                                      to remove non-predictive parameters and feature ranking. Four statistical models were trained with
+Accepted 27 January 2017
+                                                      repeated cross validation and evaluated in a testing set: (a) multiple linear regression, (b) support vector
+Available online 31 January 2017
+                                                      machine with radial kernel, (c) random forest and (d) gradient boosting machines (GBM). The best model
+                                                      (GBM) was able to explain 97% of the variance (R2 ) in the training set and with 57% in the testing set
+Keywords:
+Appliances
+                                                      when using all the predictors. From the wireless network, the data from the kitchen, laundry and living
+Energy                                                room were ranked the highest in importance for the energy prediction. The prediction models with only
+Prediction                                            the weather data, selected the atmospheric pressure (which is correlated to wind speed) as the most
+Wireless sensor network                               relevant weather data variable in the prediction. Therefore, atmospheric pressure may be important to
+Statistical learning models                           include in energy prediction models and for building performance modeling.
+Data mining                                                                                                              © 2017 Elsevier B.V. All rights reserved.
+Data sets available
+
+
+
+
+1. Introduction                                                                             As indicated in [4], the electricity consumption in domestic
+                                                                                        buildings is explained by two main factors: the type and num-
+    The understanding of the appliances energy use in buildings has                     ber of electrical appliances and the use of the appliances by the
+been the subject of numerous research studies [1–8], since appli-                       occupants. Naturally, both factors are interrelated. The domestic
+ances represent a signiﬁcant portion (between 20 and 30% [7,9]) of                      appliances use by the occupants would leave traceable signals in the
+the electrical energy demand (See Fig. 1). For instance, in a study                     indoor environment near the vicinity of the appliance, for example:
+in the UK for domestic buildings [4], appliances, such as televisions                   the temperature, humidity, vibrations, light and noise. The occu-
+and consumer electronics operating in standby were attributed to                        pancy level of the building in different locations could also help to
+a 10.2% increase in the electricity consumption. Regression models                      determine the use of the appliances. In this work, the prediction
+for energy use can help to understand the relationships between                         was carried out using different data sources and environmental
+different variables and to quantify their impact. Thus, prediction                      parameters (indoor and outdoor conditions). Speciﬁcally, data from
+models of electrical energy consumption in buildings can be use-                        a nearby airport weather station, temperature and humidity in dif-
+ful for a number of applications: to determine adequate sizing of                       ferent rooms in the house from a wireless sensor network and one
+photovoltaics and energy storage to diminish power ﬂow into the                         sub-metered electrical energy consumption (lights) have been used
+grid [10], to detect abnormal energy use patterns [11], to be part of                   to predict the energy use by appliances. Four regression models
+an energy management system for load control [1,12,13], to model                        have been tested, namely (a) multiple linear regression model (lm),
+predictive control applications where the loads are needed [14],                        (b) support vector machine with radial basis function kernel (SVM-
+for demand side management (DSM) and demand side response                               radial), (c) random forest (RF) and (d) gradient boosting machines
+(DSR) [6,15,16] and as an input for building performance simulation                     (GBM) with different combinations of predictors.
+analysis [2,17,18].                                                                         The present work mostly deals with the problem of aggregate
+                                                                                        appliances energy use prediction rather than the topic of modeling
+                                                                                        of appliances energy loads. Because of that, the literature review
+                                                                                        focuses on this topic. Nevertheless, research related to studies of
+ ∗ Corresponding author.                                                                appliances loads in buildings and modeling are included as well in
+    E-mail address: Luismiguel.candanedoibarra@umons.ac.be (L.M. Candanedo).            this study.
+
+http://dx.doi.org/10.1016/j.enbuild.2017.01.083
+0378-7788/© 2017 Elsevier B.V. All rights reserved.
+82                                                     L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97
+
+
+
+
+Fig. 1. Residential electrical energy consumption adapted from Table A4 page 139 of annual energy Outlook projections for 2015 [19]. Top chart, percentage of all delivered
+energy, Bottom chart, after removing Space heating, Space cooling, Lighting and Water Heating contributions.
+
+
+1.1. Literature review                                                                  technique to generate synthetic data and is recommended by the
+                                                                                        authors to estimate the energy demand of appliances, lighting and
+1.1.1. Appliances’ loads in buildings and numerical modeling of                         heating.
+their consumption                                                                          A methodology to estimate building energy consumption from
+    This section reviews some articles regarding modeling of appli-                     EnergyPlus benchmark models was presented in [23]. The Energy-
+ances and other socio economic factors that help to understand the                      Plus benchmark models were developed by a joint effort between
+different data and methodologies that have been used in the past                        DOE’S Building Technologies Program, Paciﬁc Northwest National
+to understand appliances’ energy use.                                                   Laboratory, Lawrence Berkeley National Laboratory and National
+    Hourly end-use data was collected from 454 houses and 140                           Renewable Energy Laboratory [24]. The authors in [23] propose
+commercial buildings in the Paciﬁc Northwest [20]. The data acqui-                      the use of a series of predetermined coefﬁcients to estimate hourly
+sition description for the data analyzed can be found in [21].                          energy consumption from utility bills, in order to relieve the user
+Typically, the data acquisition systems monitored between 12 and                        from performing dynamic simulation of the building.
+16 channels for energy consumption. The study in [20] pointed                              A Norton equivalent technique was used to model residential
+out that the end-use loads showed large temporal variations, and                        loads in [25]. The modeled loads included appliances such as a
+that although refrigeration and freezer loads tended to be very ﬂat,                    refrigerator, PC, laptop, TV and washing machines.
+cooking (food preparation) dishwasher, lights and small appliances                         A recent study focused on major household appliances (refrig-
+showed distinct evening peaks.                                                          erator, clothes washer, clothes dryer and dishwasher) to ﬁnd daily
+    A method to generate occupancy data for UK households was                           energy use proﬁles for each of them [9]. It was shown that refriger-
+presented in [22]. The model uses the Markov Chain Monte Carlo                          ators have a uniform load proﬁle, while clothes washers, clothes
+                                              L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97                                      83
+
+
+dryers and dishwashers are very user-dependent and thus vary                   lower appliance efﬁciency [7]. The provided explanation by the
+from household to household and time of day. Research on the                   researchers is the lower efﬁciency was likely due to the increased
+potential for demand response for refrigerators, clothes washers,              use of appliances when the house is occupied more often.
+clothes dryers and dishwashers was presented in [6]. The arti-                     A prediction system for the problem of individual appliance pre-
+cle ranked highest the clothes dryers for the potential of demand              diction was presented in [8]. The system used information such
+response mostly because of their large power demand.                           as past consumption, hour, day, season and month. The system is
+   A model was developed by [26] to detect and estimate individual             capable of learning from past data. One of the main conclusions was
+home appliance loads from aggregated power signals. The model                  that the last 24 h are the most relevant for prediction.
+employs the so-called explicit duration Hidden Markov model to                     More recently, 23 houses in Ottawa, Canada were monitored for
+detect the loads of home appliances.                                           energy use at 1-min resolution intervals for the air conditioners,
+   A literature review was presented in [27] examining socio-                  furnace fans, some major appliances and other Non-HVAC appli-
+economic factors, dwelling characteristics and appliances affecting            ances. In this study the number of occupants was found to be the
+electricity consumption in domestic buildings. The paper listed                strongest predictor for Non-HVAC energy use [17]. Also in the UK,
+several appliances and parameters as having a signiﬁcant positive              appliance ownership and use was studied for 183 dwellings using
+effect on domestic electricity consumption: number of appliances,              an odds ratio analysis [5]. The authors reported that households
+desktop and laptop computers, TV, video player/recorder, video                 owning more than thirty appliances have an increased proba-
+console, electric oven, range hood, refrigerators, freezers, dish-             bility of having a high electrical energy demand. Some of these
+washer, washing machine and tumble dryer among others.                         households own more than four or more IT devices, more than
+   A recent study focused on the thermal modeling of electrical                ﬁve entertainment items, an electric oven, hob or range, two or
+appliances for highly insulated buildings [2]. The study emphasized            more preservation and cooling appliances or three or more laun-
+the necessity of including electrical appliances modeling to obtain            dry machines. The main limitation of this study was that the data
+more accurate and efﬁcient building energy simulations.                        was obtained from a survey and not from measurements.
+   The models presented before are mostly useful for energy                        The review of the published literature highlights the following
+building simulation studies to evaluate different buildings designs            points:
+questions and to try to predict their impact in the buildings energy
+balances or to estimate future energy bills. The next section will             • The energy consumption of appliances represents a signiﬁcant
+deal with the problem of energy use prediction during the operation              portion of the aggregated electricity demand of the residential
+phase.                                                                           sector (up to 30% [9] see Fig. 1), and is also important for power
+                                                                                 management of the grid [3].
+1.1.2. Electricity load prediction                                             • The increased number of appliances owned makes it important
+    This section presents and discusses research addressing elec-                to identify which ones are the main contributors to the energy
+tricity load prediction to identify the parameters, models and other             consumption.
+methods that have been useful for energy prediction.                           • The energy consumption of appliances may be broken down into
+    Typically studies have used models such as multiple regression,              different contributions and sometimes may include HVAC devices
+neural networks, forecasting methods [3,28,29], engineering meth-                such as air conditioners.
+ods, support vector machines [30], time series techniques [31] and             • The patterns for energy use of appliances can vary signiﬁcantly
+forecasting methods [29] to predict the electricity demand. The                  (e.g., nearly ﬂat for refrigeration equipment, while it is highly
+models usually have considered parameters such as the time of                    variable for devices such as clothes washers, clothes dryers and
+day, outdoor temperature, month, weekend, holidays, yesterday’s                  dishwashers).
+consumption, rainfall index, global solar radiation, wind speed and            • Weather parameters have been proven relevant to predict the
+occupancy [32,33].                                                               electricity energy consumption in buildings. This consumption
+    On a larger scale, the impact of weather variables on the monthly            typically includes the HVAC contributions, which may have dif-
+(aggregated) electricity demand in England and Wales between                     ferent trends with respect to temperature for example. Thus, it
+the years 1983–2003 was studied in [34]. The employed method                     would be desirable to know if exterior weather parameters can
+was the parameter multiple regression model for regression. The                  also help in the prediction of appliances energy use.
+study used heating degree days, cooling degree days, gross domes-              • For highly insulated buildings, the thermal inﬂuence of appli-
+tic product, and humidity (when available) and was able to explain               ances on internal gains become more important and relevant in
+the variability of the monthly demand between 91 and 95%.                        building energy performance [2].
+    The study of electrical energy use patterns in buildings has been
+an active area of research in recent years. One minute interval
+                                                                                  This paper explores several questions. Is the weather data
+power measurement in 12 houses, including individual devices
+                                                                               obtained from a nearby weather station representative enough to
+(furnace, air conditioner, range/cooker, clothes dryer, dishwasher
+                                                                               improve the appliances energy consumption prediction? Can the
+and domestic hot water heater) was presented in [35]. One of the
+                                                                               temperature and humidity measurements from a wireless network
+ﬁndings was that the daily variation in the temporal distribution
+                                                                               help in the energy prediction? From all the data used in prediction
+of each house was signiﬁcant. Another study examined electric-
+                                                                               models, which parameters are the most important in energy pre-
+ity data of 1628 households [36]. From the data available to the
+                                                                               diction? Since occupancy has a direct effect on the appliances use,
+researchers, an extensive list of variables was studied: weather,
+                                                                               what impact does the inclusion of a sub metered energy measure-
+location (ZIP code), age of building, ownership, presence of double
+                                                                               ment related to occupancy (light) have on the prediction?
+pane windows, energy efﬁcient light ﬁxtures, ﬂoor area, pet owner-
+ship, number of refrigerators and entertainment devices, number
+of occupants and income level were studied. The researchers con-               1.2. Research objectives and methodology outline
+cluded that the most important variables were weather, location,
+and ﬂoor area. Also the number of refrigerators and entertainment                 The purpose of this work is to understand the relationships
+appliances (e.g. videocassette recorders, VCRs) are among the most             between appliances energy consumption and different predic-
+important determinants of daily minimum consumption. Another                   tors. Also to discuss the performance of different models (linear
+study found that being at home during the day correlated with                  regression, support vector machines, RF and GBM) to predict
+84                                            L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97
+
+
+
+
+                                                                 Fig. 2. House pictures.
+
+
+energy consumption. Furthermore, to rank the inﬂuence of pre-                  Table 1
+                                                                               List of appliances in each room or house zone.
+dictors/parameters in the prediction.
+    After the introduction, the paper continues with a description of            Room                                       Equipment
+the house and follows with a description of the energy meters and                Laundry                                    Small Fridge, Upright freezer, Wine Cellar for 160 bottles,
+wireless sensor network. The next section shows proﬁles for the                                                             Washing machine, Dryer, Internet router, internet hub,
+appliances consumption and exploratory data analysis, followed by                                                           Network Attached Storage
+a description of the data splits and features. Next, a data ﬁltering             Garage*                                    Rain water pump, electric garage door
+                                                                                 Kitchen                                    Fridge, Induction cooktop, Kitchen hood, Microwave, Oven,
+is presented to remove any non-relevant variables. After different
+                                                                                                                            Dishwasher, Coffee machine
+trained models are presented, the next section corresponds to the                Dining                                     WIFI booster, ZigBee coordinator, electrical blinds
+model selection and performance. Then, the training of models with               Living                                     TV 138 cm, Hard drive enclosure, DVD player, cable box,
+different data subsets is shown and the evaluation of trained mod-                                                          laptop, Ink-jet printer, electric blinds
+                                                                                 Ofﬁce                                      2 desktop computers, 3 computer screens, 1 router, 1
+els in the test sets is presented. The paper ends with a discussion
+                                                                                                                            laptop, 1 copier-printer, electric blinds
+of results and conclusions.                                                      Ironing                                    Alarm clock, radio, Iron, electric blind
+                                                                                 Room 1                                     Alarm clock, radio, electric blind, 2 lamps
+2. House description                                                             Room 2                                     Desktop computer, monitor, alarm clock, electric blind
+                                                                                 Room 3                                     Laptop, alarm clock
+                                                                                 Game                                       93 cm TV, Internet router, DVD player, PlayStation
+   The house is located in Stambruges, which is about 24 km                      Bathroom 1                                 2 electric toothbrushes, hair dryer
+from the City of Mons in Belgium (See Fig. 2). The construction                  Bathroom 2                                 2 electric toothbrushes
+was ﬁnished on December 2015. All the mechanical systems are                     Attic*                                     Computer, Musical Instruments, Ampliﬁer
+new. The low energy house was designed according to the pas-                   Note: The listed equipment in the rooms marked with an * are outside the measure-
+sive house certiﬁcation [37]. For this certiﬁcation, the building was          ment range of the wireless sensor network.
+designed to have an annual heating load and cooling load of no more
+than 15 kWh/m2 per year according to the Passive House Planning
+                                                                                                               700
+Package (PHPP) software design tool. It is important to note that
+a wood chimney provides most of the heating load in the house.                                                 600                   4%             3%
+                                                                                                                     4%
+The total kg amount and type of wood has been manually logged                                                        6%              5%             6%
+                                                                                                                                                                  2%
+monthly. The building air leakage was measured in September 2016                                                                                                  6%
+                                                                                                               500
+                                                                                   Total Electric Energy kWh
+
+
+
+
+and is 0.6 air changes per hour at 50 Pa. The house was designed
+with U < 0.1 W/m2 K for the exterior walls, roof and ground. Triple                                            400                                                                 1%
+                                                                                                                                                                                   7%
+glazed windows are used with Ug = 0.5 W/m2 K and Uf < 0.9 W/m2 K.                                                                   70%            71%
+                                                                                                               300   75%
+The ventilation is provided by a heat recovery ventilation unit with                                                                                             79%
+
+between 90 and 95% efﬁciency. The total ﬂoor area is 280 m2 , from                                             200                                                                79%
+which the total heated area is 220 m2 . The façade of the house is
+oriented +10◦ (Southwest) from due South. There are usually four                                               100                  13%            14%
+occupants of the house, two adults and two teenagers. One of the                                                     14%                                         12%              12%
+                                                                                                                     1%              7%             5%           1%                1%
+adults works regularly in the home ofﬁce.                                                                       0
+                                                                                                                       January        February       March             April            May
+                                                                                                                            ElectricHeater   DHW    Appliances   Venlaon     Lights
+2.1. Energy meters and ZigBee nodes
+                                                                               Fig. 3. Aggregated electric energy consumption per month. This graph includes all
+    The electric energy metering at the passive house was done                 the energy consumed from January 1st until May 22nd 2016. Note that the energy
+with M-BUS energy counters. The information from these energy                  for the month of May is not complete.
+counters is collected every 10 min. The individual electrical load
+metering includes: the heat recovery ventilation unit, domestic
+hot water heat pump (COP around 2.7), the energy consumption                   4% of the total since most of lighting ﬁxtures are LEDs. It can eas-
+of appliances, lighting, and electric baseboard heaters. The appli-            ily be seen that the energy consumption of appliances represents
+ances energy metering includes the energy used by the devices                  between 70 and 79% of the monthly electrical energy consump-
+listed in Table 1. The energy information is collected with an                 tion. For comparison, lighting and appliances used about 1.23 more
+internet-connected energy monitoring system where it is stored                 energy than domestic hot water in Spain, 1.28 more than in the EU
+and then it is reported by e-mail every 12 h. Fig. 3 shows the aggre-          overall and 1.74 more than in the USA according to data for the resi-
+gated energy consumption per month together with the percentage                dential sector in 2003 [38]. In this study, the appliances and lighting
+of each contribution. Light energy consumption ranges from 1 to                consume between 5.7 and 6.7 more than the DHW energy use.
+                                                         L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97                                                    85
+
+
+
+
+Fig. 4. Photograph of one the wireless sensors. The main components are: the
+Atmega-328P microcontroller, the DHT 22 sensor for temperature and humidity
+measurement, and the XBee radio.
+
+
+
+
+                                                                                          Fig. 6. Second ﬂoor. Location of the Temperature and Humidity sensors. The blue
+                                                                                          circles indicate the sensor number. Sensor node 6 measures the exterior conditions.
+                                                                                          (For interpretation of the references to color in this ﬁgure legend, the reader is
+                                                                                          referred to the web version of the article.)
+
+
+                                                                                          Another sub-metered load (lights) is included in the analysis since
+                                                                                          it has been shown to be a good predictor of room occupancy when
+                                                                                          combined with relative humidity measurements [43]. The wire-
+                                                                                          less sensor network’s temperature and humidity recordings were
+                                                                                          averaged for the corresponding 10 min periods and merged with
+                                                                                          the energy data set by date and time. All the data analysis is done
+                                                                                          in R [44]. The time span of the data set is 137 days (4.5 months).
+                                                                                          Fig. 7 shows the energy consumption proﬁle for the period. The
+                                                                                          energy consumption proﬁle shows a high variability. Fig. 8 shows a
+                                                                                          histogram and boxplot of the data. As can be seen the data distribu-
+                                                                                          tion has a long tail. In the boxplot, the median is represented with a
+Fig. 5. First ﬂoor. Temperature and Humidity sensors position. The blue circles indi-
+cate the sensor number. The coordinator (C) is positioned around the middle of the        thick black line inside the blue rectangle, and has a value of 60 Wh.
+house, near the dining room table. (For interpretation of the references to color in      The lower whisker has a value of 10 Wh and the upper whisker has
+this ﬁgure legend, the reader is referred to the web version of the article.)             a value of 170 Wh. It also shows that the data above the median
+                                                                                          is more dispersed and that there are several outliers (marked with
+                                                                                          the round circles above the upper whisker).
+    The house temperature and humidity conditions were moni-                                  Although there is no weather station outside the house, weather
+tored with a ZigBee wireless sensor network [39] built with XBee                          data for the nearest airport weather station (Chièvres Airport,
+radios [40], Atmega328P microcontrollers [41] and DHT-22 sen-                             Belgium) is merged by date and time in this study to evaluate its
+sors (see Fig. 4). The digital DHT-22 sensors have an accuracy of                         impact on the prediction of the energy consumption of appliances
+±0.5 ◦ C for Temperature and ±3% for relative humidity. The micro-                        [45]. The Chièvres Airport, Belgium is located about 12 km from the
+controllers were programmed using the Arduino IDE to read the                             Stambruges house. Since the downloaded weather data is at hourly
+data from the sensors and then transmit the measured data with                            intervals, linear interpolation is used to have a complete data set
+the XBee radio. The transmitted information is sent to another XBee                       (at 10 min intervals). A complete data set is often necessary for sta-
+radio that acts as the coordinator of the network. Because the house                      tistical regression models to work. Table 2 presents a list of all the
+is quite large and it is composed of thick walls and ﬂoors, it was                        variables or features. From the date/time variable other extra fea-
+necessary to include another two XBee radios that act as routers so                       tures are generated: the number of seconds from midnight for each
+there was effective communication from the end nodes to the coor-                         day (NSM), the week status (weekend or workday) and the day of
+dinator. The sensor nodes are powered with batteries. Each sensor                         the week.
+node transmits the information around 3.3 min. Figs. 5 and 6 dis-
+play the location of the sensor nodes. For more information about                         3.1. Data sets and exploratory analysis
+working with XBee radios and Arduino see [42].
+                                                                                             The combined data set is split in training and test validation
+3. Recorded data and description                                                          using CARET’S create data partition function. 75% of the data is used
+                                                                                          for the training of the models and the rest is used for testing (See
+   The energy (Wh) data logged every 10 min for the appliances is                         Table 3).
+the focus of this analysis. The 10 min reporting interval was cho-                           Fig. 9 and Appendices A–C, present pair plots showing the rela-
+sen to be able to capture quick changes in energy consumption.                            tionships between all the variables with the energy consumption
+86                                                    L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97
+
+
+
+
+                         Fig. 7. (A) Appliances energy consumption measurement for the whole period, (B) A closer look at the ﬁrst week of data.
+
+
+
+
+Fig. 8. Appliances energy consumption distribution. Top: histogram, bottom: boxplot. The histogram shows the frequency of energy consumption in the interval (bar width),
+and the boxplot shows the location of the median with the black line.
+
+
+of appliances in the training set. These ﬁgures were created with                      ventilation is driven by the HRV unit and minimizes air tempera-
+the psych package [46]. These Figures show the bivariate scatter                       ture differences between rooms. For example, a positive correlation
+plots below the diagonal, histogram plots along the diagonal and                       is found with T1 and T3. For Appendix A, the plot shows that the
+the Pearson correlation above it, which is a measure of the linear                     highest correlation with the appliances is between the outdoor
+dependence between two variables. A correlation of 1 is total pos-                     temperature (0.12). There is also a negative correlation between
+itive correlation, −1 is total negative correlation and 0 represents                   the appliances and outdoor humidity/RH6 (−.09). Appendix B also
+no correlation. In red the linear regression ﬁts are shown for each                    shows positive correlations between the consumption of appli-
+pair.                                                                                  ances and T7, T8 and T9 being 0.03, 0.05 and 0.02 respectively.
+    Fig. 9 shows that there is a positive correlation between the                      Appendix C shows the highest correlation between the energy con-
+energy consumption of appliances and lights (0.19). The second                         sumption of appliances and NSM with a value of 0.22. A positive
+largest correlation is between appliances and T2. For the indoor                       correlation of 0.10 is seen between appliances’ consumption and
+temperatures, the correlations are high as expected, since the                         outdoor temperature (Tout) that is, the higher temperatures, the
+                                                        L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97                                                       87
+
+
+
+
+Fig. 9. Pairs plot. Relationship between the energy consumption of appliances with: lights, T1, RH1, T2, RH2, T3, RH3. T1 and RH1 correspond to the kitchen conditions; T2
+and RH2 correspond to the living room conditions. (For interpretation of the references to color in text near the reference citation, the reader is referred to the web version
+of this article.)
+
+
+
+
+higher the energy use by the appliances. Also there is a positive                         this feature or variable selection helps in model interpretability and
+correlation with appliances’ consumption and wind speed (0.09),                           reduces complexity of the model [55].
+higher wind speeds correlate with higher energy consumption by                                The Boruta package compares importance of attributes with
+the appliances. A negative correlation of −0.15 was found with the                        importance of shadow attributes that are created by shufﬂing orig-
+RHout, and of −0.03 with pressure. Another important and inter-                           inal ones [50]. As can be seen in Fig. 11, the Boruta algorithm is
+esting correlation is between the pressure and the wind speed.                            capable of detecting the two random variables (boxplots in red) that
+This relationship is negative (−0.23). The linear trend is with lower                     have no predicting power for the appliances’ energy consumption.
+pressure the wind speed will be higher.                                                   The two random variables are between the Boruta-created shadow
+   An hourly heat map was created for four consecutive weeks of                           attributes shown in blue: shadowMin, shadowMean and Shadow-
+data to identify any time trends (see Fig. 10). Fig. 10 was built with                    Max. The algorithm also ranks the variables in order of importance
+the following r packages: ggplot, gridExtra and ggthemes [47–49].                         starting with the NSM variable, to the least important, the Week-
+As can be clearly seen, there is a strong time component in the                           Status variable.
+energy consumption pattern. The energy consumption starts to rise                             Although Fig. 11 provides a lot of insight, it does not tell us about
+around 6 in the morning. Then around noon, there are energy load                          the performance of the selected variables with respect to the RMSE.
+surges. The energy demand also increases around 6 pm. There is no                         To test how many variables are optimal to minimize the RMSE
+clear pattern regarding the day of the week.                                              the recursive feature elimination (RFE) is used to select the opti-
+                                                                                          mal inputs [56]. The Classiﬁcation and Regression Training package
+3.2. Data features ﬁltering and importance                                                (CARET) [57] has a RFE algorithm and is used in this study. CARET’s
+                                                                                          RFE algorithm needs the factor variables to be cast as dummy vari-
+    Since the dataset contains several features or parameters and                         ables, for which the r package dummies is used [58]. Then the
+considering that the airport weather station is not at the same loca-                     variables Week status and day of the week are transformed into
+tion as the house, it is desirable to ﬁnd out which parameters are                        dummy variables. After doing this, the total number of predictors
+the most important and which ones do not improve the prediction                           is 35. The RFE algorithm used the random forest regression method
+of the appliances’ energy consumption. For this task the Boruta                           and was trained with 10 cross validation sets. Fig. 12 shows the
+package [50] is used to select all the relevant variables. Several                        result of the RFE algorithm. The optimal number of predictors is
+researchers have used this package for variable ﬁltering [51–53]. To                      34, but the difference between 34 and 35 can be considered negli-
+test the Boruta algorithm, two random variables were introduced                           gible as is demonstrated in Fig. 12. Table 4 lists the feature ranking
+in the data sets (See [54] for the use of this approach). Moreover,                       from the RFE.
+88                                                       L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97
+
+
+
+
+                                          Fig. 10. Hourly energy consumption of appliances heat map for four consecutive weeks.
+
+
+
+
+Fig. 11. Variable importance and selection from Boruta’s algorithm. (For interpretation of the references to color in text near the reference citation, the reader is referred to
+the web version of this article.)
+
+
+   Since all the predictors can be considered relevant to minimize                         relationship between the variables and the energy consumption of
+the RMSE, they all will be used to test four regression models (lm,                        appliances is not well represented by the linear model since the
+SVM-radial, random forest and GBM).                                                        residuals are not normally distributed around the horizontal axis.
+                                                                                              In order to compare the performance of each of the regression
+                                                                                           models, different performance evaluation indices are used here:
+3.3. The performance of regression models                                                  the root mean squared error (RMSE), the coefﬁcient of determina-
+                                                                                           tion or R-squared/R2 , the mean absolute error (MAE) and the mean
+    All the regression models were trained with 10 fold cross                              absolute percentage error (MAPE):
+validation to select the best. To speed up the computations the
+doParallel package was used [59] for parallel computation. The                                        
+ﬁrst model trained was the multiple linear regression. The mul-
+                                                                                                          i=1                  2
+                                                                                                             n
+                                                                                                                 (Yi − Ŷi )
+tiple linear regression uses all the available predictors and ﬁnds                         RMSE =                                                                            (1)
+                                                                                                                   n
+the appropriate slope quantifying the effect of each predictor and
+the response [55].
+                                                                                                       i=1                 2
+    Fig. 13 shows a residual plot for the linear regression model.                                            (Yi − Ŷi )
+The residuals were computed as the difference between the real                             R2 = 1 − n                                                                       (2)
+                                                                                                           i=1            2
+values and the predicted values. From Fig. 13, it is obvious that the                                      n
+                                                                                                               (Yi − Ȳ )
+                                                    L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97                                                89
+
+Table 2                                                                              Table 3
+Data variables and description.                                                      Training and testing data set.
+
+ Data variables                         Units                    Number of             Data set                            Number of observations
+                                                                 features
+                                                                                       Training                            14,803 and 32 variables
+ Appliances energy consumption          Wh                        1                    Testing                             4932 and 32 variables
+ Light energy consumption               Wh                        2
+                                        ◦
+ T1, Temperature in kitchen area          C                       3
+ RH1, Humidity in kitchen area          %                         4
+                                        ◦
+ T2, Temperature in living room area      C                       5
+ RH2, Humidity in living room area      %                         6
+                                        ◦
+ T3, Temperature in laundry room area     C                       7
+ RH3, Humidity in laundry room area     %                         8
+                                        ◦
+ T4, Temperature in ofﬁce room            C                       9
+ RH4, Humidity in ofﬁce room            %                        10
+                                        ◦
+ T5, Temperature in bathroom              C                      11
+ RH5, Humidity in bathroom              %                        12
+                                        ◦
+ T6, Temperature outside the building     C                      13
+   (north side)
+ RH6, Humidity outside the building     %                        14
+   (north side)
+                                        ◦
+ T7, Temperature in ironing room          C                      15
+ RH7, Humidity in ironing room          %                        16
+                                        ◦
+ T8, Temperature in teenager room 2       C                      17
+ RH8, Humidity in teenager room 2       %                        18
+                                        ◦
+ T9, Temperature in parents room          C                      19
+ RH9, Humidity in parents room          %                        20
+                                        ◦
+ To, Temperature outside (from            C                      21
+   Chièvres weather station)
+ Pressure (from Chièvres weather        mm Hg                    22
+   station)                                                                          Fig. 12. RMSE using the RFE algorithm. The optimal number of predictors (34) is
+ RHo, Humidity outside (from Chièvres   %                        23                  shown with the ﬁlled dot.
+   weather station)
+ Windspeed (from Chièvres weather       m/s                      24                            i=1             
+   station)
+                                                                                                  n
+                                                                                                          Yi − Ŷi 
+ Visibility (from Chièvres weather      km                       25                  MAE =                                                                      (3)
+   station)
+                                                                                                          n
+                                        ◦                                                                             
+                                                                                            1  Yi − Ŷi 
+ Tdewpoint (from Chièvres weather           C                    26                                   n
+   station)
+                                                                                     MAPE =                                                                     (4)
+ Random Variable 1 (RV 1)               Non dimensional          27                         n       Yi
+ Random Variable 2 (RV 2)               Non dimensional          28                                i=1
+ Number of seconds from midnight        s                        29
+   (NSM)                                                                             where Yi is the actual measurement (energy consumption), Ŷi is the
+ Week status (weekend (0) or a          Factor/categorical       30                  predicted value and n is the number of measurements.
+   weekday (1))
+                                                                                        Support vector machines have been used before to predict build-
+ Day of week (Monday, Tuesday. . .      Factor/categorical       31
+   Sunday)                                                                           ing energy consumption in [60]. This work presents a detailed
+ Date time stamp                        year-month-day            –                  description of the SVM model. As explained in [60], the support vec-
+                                        hour:min:s                                   tor machine can use different kernels, and the radial basis function
+                                                                                     kernel has some numerical advantages and was used in that study.
+                                                                                     A SVM with radial kernel, SVM-radial, is employed in the present
+
+
+
+
+                                            Fig. 13. Residuals and appliances’ energy consumption plot of the lm model.
+90                                               L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97
+
+Table 4
+Feature ranking from RFE algorithm.
+
+ 1. NSM               6. RH3          11. RH9                    16. RH2              21. WndSpd                 26. T6            31. Dy w Sun
+ 2. Lights            7. Tdwpt        12. RH7                    17. T1               22. RH 8                   27. Dy w Friday   32. Wstatus Weekday
+ 3.Press              8. T5           13. T7                     18. T2               23. RH 6                   28. Dy w Mond     33. Wstatus Weekend
+ 4.RH5                9. T8           14. Visibility             19. T9               24. RHout                  29. Dy w Satrd    34.Dy week Tuesday
+ 5.T3                 10. RH1         15. RH4                    20. T4               25. Tout                   30. Dy w Wedn     35. Dy week Thursd.
+
+
+
+
+                                            Fig. 14. Trained models comparison of RMSE and R-squared values.
+
+
+research. The SVM-radial model requires two tuning parame-                           Fig. 15 shows the relative variable importance for the RF, GBM
+ters, sigma and cost variables, besides the predictors. The optimal               and SVM-radial models. For the RF and GBM models, the variable
+values for sigma (0.4) and the cost (12) variables were obtained                  importance is measured by the residual sum of squares. For the
+with a grid search (see Appendix D).                                              SVM-Radial model, the relationship between each predictor and
+    The random forest model is a Tree-based model [55]. The ran-                  the outcome is evaluated and then a linear model is ﬁt and the
+dom forest model is based on the output of several regression                     absolute value of the t value for the slope of the predictor is used
+trees. However, each tree is built with a random sample of selected               [57,61].
+predictors. The idea behind this is to decorrelate the trees and
+improve the prediction. The random forest model requires ﬁnd-
+ing the optimum number of trees and the number of randomly                        3.4.1. Evaluating the prediction with different data subsets
+selected predictors (see Appendix E). The RMSE does not appear to                     After ﬁnding out that the GBM model provided the best RMSE
+change after about 300 trees and the optimal number of random                     and R2 in the previous analysis, this model was used to study the
+selected predictors is 18 as seen in Appendix E. The GBM models                   prediction performance with different predictors subsets: remov-
+(also known as boosting) try to improve the prediction by using                   ing the light consumption, removing the light and no weather data,
+information from the ﬁrst trees and also require the selection of                 removing the temperature and humidity from the wireless sen-
+optimal parameters for the number of trees (10,900) and maximum                   sor network and only using the weather and time information. See
+tree depth (5) (see Appendix F).                                                  Table 6 and Fig. 16 for the considered predictors and the models’
+                                                                                  performance in the training and testing sets.
+                                                                                      From Table 6, the performance of the GBM model without the
+3.4. Model selection                                                              lights predictor is quite accurate in comparison with the GBM
+                                                                                  model in Table 5. For this model the R2 is 0.58 in the testing
+    After training the models, each model has 30 results from 10-                 set. The performance for the GBM model without the lights and
+fold cross validation (CV) sets and 3 repeats. This information was               weather data is slightly less accurate since the R2 in the testing set
+used in CARET to plot the RMSE for each model together with the                   was reduced to 0.54. The third model in Table 6 that includes the
+conﬁdence intervals as shown in Fig. 14. This ﬁgure also shows the                weather data and the light predictor has an equivalent performance
+R-squared (R2 ) from the results and its conﬁdence interval. The best             to the fourth model that only includes the weather data since their
+models are the ones that provide the lower RMSE and highest R2                    R2 are the same (0.49).
+values.
+    As can be seen the RF and GBM models have very similar perfor-
+mance based on their RMSE and R-squared values and conﬁdence                      3.5. Discussion of results
+intervals. The SVM radial model also shows a signiﬁcant reduction
+of the RMSE compared to the linear regression model.                                  As seen in Fig. 3, the consumption of appliances represents the
+    Table 5 presents the performance of the trained models in the                 highest percentage of electrical consumption, between 70% and 79%
+training and testing sets. As can be seen the RMSE of the models                  of the monthly consumption. The appliances’ consumption proﬁle
+in the testing set are within the range suggested in Fig. 14 found                is highly variable as seen in Fig. 7, with periods of almost constant
+during repeated CV.                                                               demand followed by high spikes. These results are similar to those
+                                                      L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97                                                   91
+
+Table 5
+Models performance.
+
+ Model             Parameters/features                                      Training                                            Testing
+
+                                                                            RMSE        R2          MAE         MAPE %          RMSE         R2          MAE      MAPE %
+
+ LM                Light, T1,RH1,T2,RH2,T3,                                 93.21       0.18        53.13       61.32           93.18        0.16        51.97    59.93
+                   RH3,T4, RH4,T5,RH5,T6,
+                   RH6, T7,RH7,T8,TH8,T9,RH9,
+                   To,Pressure,Rho,WindSpd,
+                   Tdewpoint, NSM, WeekStatus,
+                   Day of Week
+ SVM Radial        Light,T1,RH1,T2,RH2,T3,RH3,                              39.35       0.85        15.08       15.60           70.74        0.52        31.36    29.76
+                   T4,RH4,T5,RH5,T6,RH6,T7,RH7,T8,TH8,T9,RH9,To,
+                   Pressure,Rho,WindSpeed,
+                   Tdewpoint,NSM, WeekStatus, Day of Week
+ GBM               Light,T1,RH1,T2,RH2,T3,RH3,                              17.56       0.97        11.97       16.27           66.65        0.57        35.22    38.29
+                   T4,RH4,T5,RH5,T6,RH6, T7,RH7,T8,TH8,T9,RH9,To,
+                   Pressure,Rho,WindSpeed,
+                   Tdewpoint,NSM, WeekStatus, Day of Week
+ RF                Light,T1,RH1,T2,RH2,T3,RH3,                              29.61       0.92        13.75       13.43           68.48        0.54        31.85    31.39
+                   T4,RH4,T5,RH5,T6,RH6,T7,
+                   RH7,T8,TH8,T9,RH9,To,
+                   Pressure,Rho,WindSpeed,
+                   Tdewpoint,NSM, WeekStatus, Day of Week
+
+
+
+
+                                                 Fig. 15. Variable importance for RF, GBM and SVM radial models.
+
+Table 6
+Models performance with different subsets.
+
+ Model                          Parameters/features                                      RMSE training                               RMSE testing
+
+                                                                                         RMSE      R2        MAE        MAPE %       RMSE         R2      MAE     MAPE %
+
+ GBM – no lights                T1,RH1,T2,RH2,T3,RH3,                                    17.90     0.97      12.24      16.66        66.21        0.58    35.24   38.65
+                                T4,RH4,T5,RH5,T6,RH6, T7,RH7,T8,TH8,T9,RH9,To,
+                                Pressure,Rho,WindSpeed,
+                                Tdewpoint,NSM, WeekStatus,
+                                Day of Week
+ GBM – no lights and no         T1,RH1,T2,RH2,T3,RH3,                                    18.83     0.97      12.85      17.44        68.59        0.54    36.21   39.23
+  weather data                  T4,RH4,T5,RH5,T6,RH6, T7,RH7,T8,TH8,T9,RH9,
+                                NSM, WeekStatus,
+                                Day of Week
+ GBM – no Temp and              Light, To,Pressure,Rho,                                  27.47     0.93      18.29      23.71        72.64        0.49    40.32   45.33
+  humidity inside house         WindSpeed,Tdewpoint,NSM, WeekStatus, Day of
+                                Week
+ GBM – only weather and         To,Pressure,Rho,WindSpeed,                               28.29     0.92      18.85      24.41        72.45        0.49    40.73   46.53
+  time information              Tdewpoint,NSM, WeekStatus,
+                                Day of Week
+92                                            L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97
+
+
+
+
+                                        Fig. 16. Trained GBM models comparison of RMSE and R-squared values.
+
+
+
+
+                                        Fig. 17. Variable importance for the different GBM data subsets models.
+
+
+presented in [9,20]. The boxplot shown in Fig. 8 shows that the data           the humidity of the room (also the humidity ratio) increased when
+above the median is highly dispersed and skewed.                               occupants arrived in the ofﬁce room and started to drop when the
+    When doing the exploratory data analysis some paired corre-                ofﬁce was empty. Therefore, higher humidity may indicate occu-
+lations found were interesting. Fig. 9, Appendices A and B show                pancy.
+that high correlations exist between T1 and T2 (0.84), T2 and                     RH1 (kitchen area) and Appliances are positively correlated
+T3 (0.74), T4 and T5 (0.87), T5 and T6 (0.63), T7 and T8 (0.88),               (0.06). This could be explained by higher humidity levels in the
+and T8 with T9 (0.86). This is important because it indicates that             zone when cooking and human presence. There is a positive cor-
+RC thermal networks are suited for building energy modeling                    relation between appliances’ consumption and RH3 (laundry room
+and that measuring the most representative rooms may be rep-                   humidity) of 0.04. This may mean that the washing machine and/or
+resentative enough for the energy prediction of appliances. Also               the dryer are/is in use. There were also small positive correlations of
+it indicates that a one zone thermal model might be adequate                   0.02 and 0.01 between appliances’ consumption with RH4 (down-
+for modeling. For RC thermal models, system identiﬁcation tech-                stairs ofﬁce) and RH5 (upstairs bathroom) respectively. A different
+niques could be used for ﬁnding the values of the resistances and              behavior, negative correlation of −0.06 was found between appli-
+capacitances.                                                                  ances’ consumption and the humidity in the living room (RH2).
+    The relationships between the humidity in each room and the                This may suggest that the energy consumption in this zone is lower
+appliances’ consumption are quite telling. From research in [43],              with reference to the kitchen and laundry room for example. For
+                                               L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97                                        93
+
+
+the three bedrooms upstairs the correlations were also negative.                the NSM, Pressure, RH1, RH2, RH3, RH5, T6, RH6, RH4, RH9, T8, T4,
+Between appliances’ consumption and RH7 the correlation was                     and T2. This means that information from the kitchen, living room,
+−0.06, between appliances and RH8 it was -0.09, and between                     laundry room, bathroom, outdoors, ofﬁce, and bedrooms are the
+appliances and RH9 it was −0.05. An explanation for these results               most important.
+may be that although humidity increases with human presence,
+when bedrooms are occupied, the devices used in these rooms have
+                                                                                3.6. Research limitations
+lower power demands than the ones in the zones with positive cor-
+relations. It can also indicate that the occupants are sleeping and
+                                                                                    One of the main limitations of this study is that the analysis was
+therefore not consuming as much energy in the house.
+                                                                                done for only one house. Important information could be found
+    A small negative correlation (−0.03) was found between the
+                                                                                when analyzing several houses, and other relationships can be
+appliances’ consumption with atmospheric pressure (see Appendix
+                                                                                studied with appliances’ energy consumption in combination with:
+C). Also a positive correlation of 0.09 between appliances’ con-
+                                                                                occupant’s age, number of occupants, ownership of pets, building’s
+sumption and wind speed was found. Between the pressure and the
+                                                                                geometry etc. Another research limitation is the length of continu-
+wind speed the correlation is negative (−0.23), meaning that lower
+                                                                                ous analyzed data. Different energy use patterns can potentially be
+pressure corresponds with higher wind speeds. Maybe the reason
+                                                                                found depending on the season of the year. Regarding the weather
+for the relationships between appliances’ consumption, pressure
+                                                                                station, the predictions of appliances energy use could probably be
+and wind speed are related to occupancy changes due to weather,
+                                                                                better if the weather station was closer to the house. This research
+since building occupancy has a strong relationship with energy
+                                                                                has not looked into the problem of optimal location of the wireless
+consumption [62–64]. Fair weather usually corresponds with high
+                                                                                indoor sensors for improvement of the energy prediction. It is also
+atmospheric pressure and pressure drop trends or low pressure
+                                                                                possible that more sensors and better sensor accuracy could help
+may correspond to foul or rainy weather [65]. Wind speed also has
+                                                                                to improve the energy prediction.
+been found to correlate with window opening behavior of occu-
+pants in buildings [66]. It is possible that the average linear trend
+of higher consumption of appliances with lower pressure and with                4. Conclusion
+higher wind speeds are an indication that the occupants tend to
+remain indoors in periods of bad weather. Also in results presented                 The statistical data analysis has shown thought-provoking
+by [67] there was a correlation between Cooling degree minutes                  results in both the exploratory analysis and in prediction mod-
+(CDM) and atmospheric pressure and also a correlation was found                 els. The pairwise plots are useful because they shed light on the
+for Heating degree minutes (HDM) and atmospheric pressure.                      different relationships between parameters that could be hidden
+    The data ﬁltering shown in Section 3.2 is relevant since it helps           in ﬁnal predictive models. The GBM and RF models improve the
+to diminish the number of features and predictors that have no                  RSME and R2 of predictions compared to the SVM-radial and mul-
+effect on the accuracy of the prediction. The Boruta algorithm was              tiple linear regression lm. For all the models, the time information
+able to pick up the inserted two random variables in the data set. It           (NSM) was ranked as the most important to predict the appliances’
+also showed that the weather parameters from the nearby weather                 consumption.
+station are relevant in the prediction problem.                                     The weather data from the nearby weather station was shown
+    According to the RFE algorithm, it can be seen in Fig. 12 that six          to increase the prediction accuracy in the GBM models. The GBM
+parameters can signiﬁcantly reduce the RMSE. These parameters                   models with only weather data ranked the pressure as the most
+are: NSM, lights, pressure, RH5, T3 and RH3 (see Table 4). The least            important weather variable, followed by the outdoor temperature,
+important predictors are the ones related with week status and day              dew point temperature, outdoor relative humidity, wind speed
+of the week.                                                                    and visibility. The possible explanation for why the pressure has
+    The plots with the RMSE and R2 with the associated conﬁdence                a strong prediction power may be related to its inﬂuence on the
+levels have been proven useful in predicting the performance of                 wind speed and higher rainfall probability which could potentially
+each model in the testing set. The best models are the RF and GBM               increase the occupancy of the house. Research by [67] found that
+according to the RMSE and R2 (See Fig. 14). In the training set                 atmospheric pressure is highly correlated with the cooling degree
+the GBM model had an R2 of 0.97 and the RF and an R2 of 0.92.                   minutes (CDM) and heating degree minutes (HDM). Also, pressure
+Regarding the variable importance in Fig. 15, it is interesting to              has direct effects on air humidity ratio, density and enthalpy.
+see that for the three models the NSM was the most important                        Data from a wireless sensor network that measures humidity
+predictor. The RF and the SVM models picked the lights as the sec-              and temperature has been proven to increase the prediction accu-
+ond most important predictor while for the GBM model it was the                 racy. The data analysis showed that data from the kitchen, laundry
+atmospheric pressure. The data from the wireless sensor network                 room, living room and bathrooms had the most important con-
+was ranked highly in the GBM model, especially with information                 tributions. Data from the other rooms also helps in the prediction.
+from the living room (RH2), the kitchen (RH1), the laundry room                 When looking at the appliances in each room in Table 1, it can be
+(T3) and bathroom (RH5) in the top positions. Since the wireless                seen that the laundry, kitchen and living rooms would be expected
+data is highly correlated with the other predictors, it is better to            to have the highest contributions because of the equipment present
+study this data subset separately to have a better appreciation for             (see also Fig. 1). The prediction of appliances’ consumption with
+the different ranks. In Table 6 it can be seen that the GBM model               data from the wireless network indicates that it can help to locate
+without light information is as accurate as the one including light             where in a building the main appliances’ energy consumption con-
+in Table 5 with an R2 of 0.58 in the testing set. The model only                tributions are found.
+leveraged in the wireless sensor data (without lights and weather                   When using all the predictors the light consumption was
+information), has a smaller R2 in the testing set (0.54). The last              ranked highly. However, when studying different predictor subsets,
+two models that consider the light and only the exterior weather                removing the light consumption appeared not to have a signiﬁcant
+data in Table 6, have almost the same performance 0.93 R2 in one                impact. This may be an indication that other features are correlated
+and 0.92 in the training sets, with the same R2 in the testing set              well with the light energy consumption.
+(0.49).                                                                             This study has found curious relationships between variables.
+    When looking at the ranking for the GBM model with no light                 Future work could include considering weather data such as solar
+information (see Fig. 17), it can be seen that the top predictors are           radiation and precipitation. This has also been recommended in
+94                                             L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97
+
+
+[62]. Also occupancy and occupant’s activity information could be               Appendix B.
+useful to improve the prediction and ﬁnd its relationship with other
+parameters (exterior weather for example). The wireless sensors                     Pairs plot showing relationships between the energy consump-
+could also measure CO2 and noise to help in the prediction and to               tion of appliances with: T7, RH7,T8, RH8, T9,RH9. T7 and RH7
+track the occupant’s movement from room to room and time spent                  correspond to the ironing room conditions, T8 and RH8 correspond
+in each room.                                                                   to room 2, T9 and RH9 correspond to the main room.
+    In order to allow for reproducibility of the presented results, and
+for fellow scientist and researchers to test their regression models,
+the data and the processing scripts will be made available in the fol-
+lowing public repository: https://github.com/LuisM78/Appliances-
+energy-prediction-data.
+
+
+
+
+Acknowledgments
+
+   This work has received funding from the European Union’s
+Seventh Program for research, technological development and
+demonstration under grant agreement no. 285173 — NEED4B “New
+Energy Efﬁcient Demonstration for Buildings”.
+   We would like to express our appreciation and thanks to Marcel
+Rustin and Christophe Coetsier for their help in the assembly and
+customization of the temperature and humidity wireless sensors.
+
+
+
+
+Appendix A.
+
+                                                                                Appendix C.
+   Pairs plot showing relationships between the energy consump-
+tion of appliances with: T4, RH4, T5, RH5, T6, RH6. T4 and RH4
+                                                                                   Pairs plot showing relationships between the energy con-
+correspond to the ofﬁce conditions; T5 and RH5 correspond to the
+                                                                                sumption of appliances with: T out, Pressure, RH out, Windspeed,
+bathroom conditions, and T6 and RH6 correspond to the outdoor
+                                                                                Visibility, TDewpoint, NSM and T6.
+conditions.
+                                             L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97   95
+
+
+Appendix D.
+
+    Grid search results for optimal values of sigma and cost values
+for the SVM-radial model.
+
+
+
+
+Appendix E.
+
+   Random forest model with all the parameters.
+96                                                        L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97
+
+
+Appendix F.
+
+   Grid search results for ﬁnding the optimal number of trees
+(boosting iterations) and maximum tree depth for the GBM-model.
+
+
+
+
+References
+                                                                                           [16] R. D’hulst, W. Labeeuw, B. Beusen, S. Claessens, G. Deconinck, K.
+ [1] A. Barbato, A. Capone, M. Rodolﬁ, D. Tagliaferri, Forecasting the usage of                 Vanthournout, Demand response ﬂexibility and ﬂexibility potential of
+     household appliances through power meter sensors for demand management                     residential smart appliances: experiences from large pilot test in Belgium,
+     in the smart grid, in: IEEE International Conference on Smart Grid                         Appl. Energy 155 (2015) 79–90.
+     Communications (SmartGridComm), IEEE, 2011, pp. 404–409.                              [17] G. Johnson, I. Beausoleil-Morrison, Electrical-end-use data from 23 houses
+ [2] M. Ruellan, H. Park, R. Bennacer, Residential building energy demand and                   sampled each minute for simulating micro-generation systems, Appl. Therm.
+     thermal comfort: Thermal dynamics of electrical appliances and their impact,               Eng. (2016).
+     Energy Build (2016) 46–54.                                                            [18] M. Muratori, M.C. Roberts, R. Sioshansi, V. Marano, G. Rizzoni, A highly
+ [3] N. Arghira, L. Hawarah, S. Ploix, M. Jacomino, Prediction of appliances energy             resolved modeling technique to simulate residential power demand, Appl.
+     use in smart homes, Energy 48 (1) (2012) 128–134.                                          Energy 107 (2013) 465–473.
+ [4] S. Firth, K. Lomas, A. Wright, R. Wall, Identifying trends in the use of domestic     [19] U.E.I. Association, Annual energy outlook, US Department of Energy,
+     appliances from household electricity consumption measurements, Energy                     Washington, DC, 2012, Retrieved from http://www. eia. gov, 2012.
+     Build. 40 (5) (2008) 926–936.                                                         [20] R.G. Pratt, C.C. Conner, B.A. Cooke, E.E. Richman, Metered end-use
+ [5] R.V. Jones, K.J. Lomas, Determinants of high electrical energy demand in UK                consumption and load shapes from the ELCAP residential sample of existing
+     homes: appliance ownership and use, Energy Build. 117 (2016) 71–82.                        homes in the Paciﬁc Northwest, Energy Build. 19 (3) (1993) 179–193.
+ [6] K.S. Cetin, Characterizing large residential appliance peak load reduction            [21] W.F. Sandusky, E.W. Pearson, N.E. Miller, R.S. Crowder, G.B. Parker, R.P.
+     potential utilizing a probabilistic approach, Sci. Technol. Built Environ. 22 (6)          Mazzucchi, G.M. Stokes, J.J. Thomas, R.G. Pratt, G.J. Schuster, M.A. Halverson,
+     (2016) 720–732.                                                                            J.L. Stoops, F.J. Peterson, R.A. Gillman, R.A. Stokes, S.G. Hauser, ELCAP
+ [7] A. Kavousian, R. Rajagopal, M. Fischer, Ranking appliance energy efﬁciency in              operational experience, Energy Build. 19 (3) (1993) 167–178.
+     households: Utilizing smart meter data and energy efﬁciency frontiers to              [22] I. Richardson, M. Thomson, D. Inﬁeld, A high-resolution domestic building
+     estimate and identify the determinants of appliance energy efﬁciency in                    occupancy model for energy demand simulations, Energy Build. 40 (8) (2008)
+     residential buildings, Energy Build. 99 (2015) 220–230.                                    1560–1566.
+ [8] K. Basu, L. Hawarah, N. Arghira, H. Joumaa, S. Ploix, A prediction system for         [23] N. Fumo, P. Mago, R. Luck, Methodology to estimate building energy
+     home appliance usage, Energy Build. 67 (2013) 668–679.                                     consumption using EnergyPlus Benchmark Models, Energy Build. 42 (12)
+ [9] K.S. Cetin, P.C. Tabares-Velasco, A. Novoselac, Appliance daily energy use in              (2010) 2331–2337.
+     new residential buildings: Use proﬁles and variation in time-of-use, Energy           [24] P. Torcellini, M. Deru, B. Grifﬁth, K. Benne, M. Halverson, D. Winiarski, D.
+     Build. 84 (2014) 716–726.                                                                  Crawley, Proceeding of DOE commercial building benchmark models, 2008,
+[10] F. Spertino, P. Di Leo, V. Cocina, Which are the constraints to the photovoltaic           pp. 17–22.
+     grid-parity in the main European markets? Solar Energy 105 (2014) 390–400.            [25] M. Ghorbani, M.S. Rad, H. Mokhtari, M. Honarmand, M. Youhannaie,
+[11] J.E. Seem, Using intelligent data analysis to detect abnormal energy                       Residential loads modeling by norton equivalent model of household loads,
+     consumption in buildings, Energy Build. 39 (1) (2007) 52–58.                               in: Power and Energy Engineering Conference (APPEEC), Asia-Paciﬁc, IEEE,
+[12] P. Zhao, S. Suryanarayanan, M.G. Simoes, An energy management system for                   2011, pp. 1–4.
+     building structures using a multi-agent decision-making control                       [26] Z. Guo, Z.J. Wang, A. Kashani, Home appliance load modeling from aggregated
+     methodology, IEEE Trans. Ind. Appl. 49 (1) (2013) 322–330.                                 smart meter data, IEEE Trans. Power Syst. 30 (1) (2015) 254–262.
+[13] M. Castillo-Cagigal, E. Caamaño-Martín, E. Matallanas, D. Masa-Bote, A.              [27] R.V. Jones, A. Fuertes, K.J. Lomas, The socio-economic, dwelling and appliance
+     Gutiérrez, F. Monasterio-Huelin, J. Jiménez-Leube, PV self-consumption                     related factors affecting electricity consumption in domestic buildings,
+     optimization with storage and active DSM for the residential sector, Solar                 Renew. Sustain. Energy Rev. 43 (2015) 901–917.
+     Energy 85 (9) (2011) 2338–2348.                                                       [28] S.-H. Ling, F.H. Leung, H. Lam, P.K. Tam, Short-term electric load forecasting
+[14] J.A. Candanedo, V.R. Dehkordi, M. Stylianou, Model-based predictive control                based on a neural fuzzy network, IEEE Trans. Ind. Electron. 50 (6) (2003)
+     of an ice storage device in a building cooling system, Appl. Energy 111 (2013)             1305–1316.
+     1032–1045.                                                                            [29] A. Veit, C. Goebel, R. Tidke, C. Doblander, H.-A. Jacobsen, Household electricity
+[15] S. Mitchell, R. Sarhadian, S. Guow, B. Coburn, J. Lutton, I. Christi, D. Rauss, C.         demand forecasting: benchmarking state-of-the-art methods, in: Proceedings
+     Haiad, Residential appliance demand response testing, in: ACEEE Summer                     of the 5th international conference on Future energy systems, ACM, 2014, pp.
+     Study on Energy Efﬁcient Buildings, Paciﬁc Grove, CA, 2014.                                233–234.
+                                                        L.M. Candanedo et al. / Energy and Buildings 140 (2017) 81–97                                                       97
+
+
+[30] H.-x. Zhao, F. Magoulès, A review on the prediction of building energy              [50] M.B. Kursa, W.R. Rudnicki, Feature selection with the boruta package, J. Stat.
+     consumption, Renew. Sustain. Energy Rev. 16 (6) (2012) 3586–                             Softw. 36 (11) (2010) 1–13.
+     3592.                                                                               [51] T.-T. Nguyen, J.Z. Huang, T.T. Nguyen, Two-level quantile regression forests for
+[31] F. McLoughlin, A. Duffy, M. Conlon, Evaluation of time series techniques to              bias correction in range prediction, Mach. Learn. 101 (1–3) (2015) 325–343.
+     characterise domestic electricity demand, Energy 50 (2013) 120–130.                 [52] S. Strempel, M. Nendza, M. Scheringer, K. Hungerbühler, Using conditional
+[32] C. Sandels, J. Widén, L. Nordström, E. Andersson, Day-ahead predictions of               inference trees and random forests to predict the bioaccumulation potential
+     electricity consumption in a Swedish ofﬁce building from weather,                        of organic chemicals, Environ. Toxicol. Chem. 32 (5) (2013) 1187–1195.
+     occupancy, and temporal data, Energy Build. 108 (2015) 279–290.                     [53] M. Belgiu, L. Drăguţ, Random forest in remote sensing: a review of
+[33] P. Bacher, H. Madsen, H.A. Nielsen, B. Perers, Short-term heat load forecasting          applications and future directions, ISPRS J. Photogram. Rem. Sens. 114 (2016)
+     for single family houses, Energy Build. 65 (2013) 101–112.                               24–31.
+[34] C.-L. Hor, S.J. Watson, S. Majithia, Analyzing the impact of weather variables      [54] A. Tsanas, A. Xifara, Accurate quantitative estimation of energy performance
+     on monthly electricity demand, IEEE Trans. Power Syst. 20 (4) (2005)                     of residential buildings using statistical machine learning tools, Energy Build.
+     2078–2085.                                                                               49 (2012) 560–567.
+[35] N. Saldanha, I. Beausoleil-Morrison, Measured end-use electric load proﬁles         [55] G. James, D. Witten, T. Hastie, R. Tibshirani, An Introduction to Statistical
+     for 12 Canadian houses at high temporal resolution, Energy Build. 49 (2012)              Learning, Springer, 2013.
+     519–530.                                                                            [56] C. Fan, F. Xiao, S. Wang, Development of prediction models for next-day
+[36] A. Kavousian, R. Rajagopal, M. Fischer, Determinants of residential electricity          building energy consumption and peak power demand using data mining
+     consumption: using smart meter data to examine the effect of climate,                    techniques, Appl. Energy 127 (2014) 1–10.
+     building characteristics, appliance stock, and occupants’ behavior, Energy 55       [57] M. Kuhn, caret: Classiﬁcation and Regression Training, 2015.
+     (2013) 184–194.                                                                     [58] C. Brown, dummies: Create dummy/indicator variables ﬂexibly and
+[37] W. Feist, R. Pﬂuger, B. Kaufmann, J. Schnieders, O. Kah, Passive House Planning          efﬁciently, 2012.
+     Package, Passive House Institute, Darmstadt, 2007.                                  [59] Revolution Analytics, S. Weston, doParallel: Foreach Parallel Adaptor for the
+[38] L. Pérez-Lombard, J. Ortiz, C. Pout, A review on buildings energy consumption            ‘parallel’ Package, 2015.
+     information, Energy Build. 40 (3) (2008) 394–398.                                   [60] B. Dong, C. Cao, S.E. Lee, Applying support vector machines to predict building
+[39] Z. Alliance, Zigbee Speciﬁcation, 2006.                                                  energy consumption in tropical region, Energy Build. 37 (5) (2005) 545–553.
+                        ®
+[40] X. Digi, XBee-PRO RF Modules, Digi International Inc., Minnesota, 2009.             [61] M. Kuhn, K. Johnson, Applied Predictive Modeling, Springer, New York, 2013.
+[41] Atmel Corporation, ATmega328, 2016.                                                 [62] T. Hong, S.C. Taylor-Lange, S. D’Oca, D. Yan, S.P. Corgnati, Advances in research
+[42] R. Faludi, Building wireless sensor networks: with ZigBee, XBee, arduino, and            and applications of energy-related occupant behavior in buildings, Energy
+     processing, O’Reilly Media, Inc., 2010.                                                  Build. 116 (2016) 694–702.
+[43] L.M. Candanedo, V. Feldheim, Accurate occupancy detection of an ofﬁce room          [63] X. Liang, T. Hong, G.Q. Shen, Improving the accuracy of energy baseline
+     from light, temperature, humidity and CO2 measurements using statistical                 models for commercial buildings with occupancy data, Appl. Energy 179
+     learning models, Energy Build. 112 (2016) 28–39.                                         (2016) 247–260.
+[44] R Core Team, R: A Language and Environment for Statistical Computing, R             [64] D. Yan, W. O’Brien, T. Hong, X. Feng, H. Burak Gunay, F. Tahmasebi, A.
+     Foundation for Statistical Computing, 2014.                                              Mahdavi, Occupant behavior modeling for building performance simulation:
+[45] rp5.ru, Reliable Prognosis, 2016.                                                        Current state and future challenges, Energy Build. 107 (2015) 264–278.
+[46] W. Revelle, psych: Procedures for Psychological, Psychometric, and                  [65] F.K. Lutgens, E.J. Tarbuck, D. Tusa, The Atmosphere, Prentice-Hall, 1995.
+     Personality Research, Northwestern University, 2016.                                [66] Y. Zhang, P. Barrett, Factors inﬂuencing the occupants’ window opening
+[47] H. Wickham, ggplot2: Elegant Graphics for Data Analysis, Springer, New York,             behaviour in a naturally ventilated ofﬁce building, Build. Environ. 50 (2012)
+     2009.                                                                                    125–134.
+[48] A.B. Jeffrey, ggthemes: Extra Themes, Scales and Geoms for ‘ggplot2’, 2016.         [67] M.G. Fikru, L. Gautier, The impact of weather variation on energy
+[49] B. Auguie, gridExtra: Miscellaneous Functions for “Grid” Graphics, 2015.                 consumption in residential houses, Appl. Energy 144 (2015) 19–30.
+

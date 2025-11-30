@@ -1,0 +1,9 @@
+Room,Correlation with T_out,Thermal Coupling
+T_Kitchen,0.6828459090771672,High
+T_LivingRoom,0.7922546032932197,High
+T_LaundryRoom,0.6994171099841383,High
+T_Office,0.6634782621715473,High
+T_Bathroom,0.6513213181116347,High
+T_IroningRoom,0.6312925784638121,High
+T_TeenagerRoom,0.5028421388841603,Medium
+T_ParentsRoom,0.668219958022938,High
