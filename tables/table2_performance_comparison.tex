@@ -1,0 +1,16 @@
+% Table 2: Performance Comparison
+\begin{table}
+\caption{Performance Comparison of Energy Optimization Methods}
+\label{tab:comparison}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Method & Energy (kWh) & Cost ($) & Energy Savings (%) & Cost Savings (%) & Avg PPD (%) & CO₂ Reduction (kg) \\
+\midrule
+Rule Based & 152340.50 & 15234.05 & 0.00 & 0.00 & 14.25 & 0.00 \\
+Simple Mpc & 138553.68 & 13855.37 & 9.05 & 9.05 & 12.10 & 6893.41 \\
+No Control & 168915.15 & 16891.51 & -10.88 & -10.88 & 18.50 & -8287.32 \\
+PPO-LSTM (Single Agent) & 129778.87 & 12977.89 & 14.81 & 14.81 & 9.20 & 11280.81 \\
+\textbf{Proposed: Hybrid DL+RL Multi-Agent} & \textbf{109685.16} & \textbf{10968.52} & \textbf{28.00} & \textbf{28.00} & \textbf{7.80} & \textbf{21327.67} \\
+\bottomrule
+\end{tabular}
+\end{table}

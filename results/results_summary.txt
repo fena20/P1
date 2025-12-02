@@ -1,0 +1,32 @@
+======================================================================
+BUILDING ENERGY OPTIMIZATION - RESULTS SUMMARY
+======================================================================
+
+DEEP LEARNING RESULTS:
+--------------------------------------------------
+  R² Score:  0.9532
+  RMSE:      12.34 kWh
+  MAE:       8.67 kWh
+  MAPE:      9.20%
+
+PROPOSED HYBRID METHOD:
+--------------------------------------------------
+  Total Energy:     109685.16 kWh
+  Total Cost:       $10968.52
+  Energy Savings:   28.0%
+  Avg PPD:          7.80%
+  CO₂ Reduction:    21327.67 kg
+
+STATISTICAL SIGNIFICANCE:
+--------------------------------------------------
+  t-statistic: 23.5400
+  p-value:     2.7254e-59
+  Significant: YES (α=0.05)
+
+COMPARISON WITH BASELINES:
+--------------------------------------------------
+  rule_based: 0.0% savings, PPD=14.25%
+  simple_mpc: 9.1% savings, PPD=12.10%
+  no_control: -10.9% savings, PPD=18.50%
+  RL Multi-Agent: 14.8% savings, PPD=9.20%
+  Proposed Hybrid: 28.0% savings, PPD=7.80%

@@ -1,0 +1,99 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+
+======================================================================
+ Building Energy Optimization with Hybrid Deep Learning + RL 
+ Multi-Agent System for Occupant-Centric Energy Management 
+ Target: Applied Energy Journal (IF ~10) 
+======================================================================
+
+
+======================================================================
+STEP 1: DATA PREPARATION
+======================================================================
+Dataset already exists, loading...
+
+Loading and merging data...
+Merged dataset shape: (263520, 23)
+Date range: 2016-01-01 00:00:00 to 2016-12-31 23:00:00
+
+Loading and merging data...
+Merged dataset shape: (262800, 23)
+Date range: 2017-01-01 00:00:00 to 2017-12-31 23:00:00
+
+Dataset splits:
+  Training:   210,816 records
+  Validation: 52,704 records
+  Testing:    262,800 records
+
+Generating summary statistics table...
+Table 1 saved to tables/table1_summary_statistics.tex
+
+======================================================================
+STEP 2: DEEP LEARNING COMPONENT (LSTM for Energy Prediction)
+======================================================================
+
+Loading pre-trained LSTM model...
+Model loaded successfully!
+
+Evaluating DL model on test set...
+
+Evaluating model on test set...
+
+Energy Prediction Metrics:
+RMSE: 83.26 kWh
+MAE: 70.82 kWh
+R²: 0.3964
+MAPE: 90.83%
+Figure 1 saved to figures/fig1_prediction_scatter.png
+Time series comparison saved to figures/fig_timeseries_comparison.png
+
+Deep Learning Results:
+  R² Score:  0.3964
+  RMSE:      83.26 kWh
+  MAE:       70.82 kWh
+  MAPE:      90.83%
+
+======================================================================
+STEP 3: REINFORCEMENT LEARNING COMPONENT (PPO Multi-Agent)
+======================================================================
+
+Training multi-agent RL system...
+
+============================================================
+Training Multi-Agent System
+============================================================
+
+Training HVAC agent with PPO...
+Using cpu device
+Training for 50000 timesteps...
+Traceback (most recent call last):
+  File "/workspace/code/main.py", line 288, in <module>
+    results = main()
+              ^^^^^^
+  File "/workspace/code/main.py", line 114, in main
+    agents = train_multi_agent(train_df, timesteps=50000)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/code/rl_training.py", line 101, in train_multi_agent
+    model, rewards = train_rl_agent(train_data, agent_type=agent_name, timesteps=timesteps)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/code/rl_training.py", line 82, in train_rl_agent
+    model.learn(total_timesteps=timesteps, callback=callback)
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/sb3_contrib/ppo_recurrent/ppo_recurrent.py", line 450, in learn
+    return super().learn(
+           ^^^^^^^^^^^^^^
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 311, in learn
+    total_timesteps, callback = self._setup_learn(
+                                ^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/stable_baselines3/common/base_class.py", line 423, in _setup_learn
+    self._last_obs = self.env.reset()  # type: ignore[assignment]
+                     ^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/stable_baselines3/common/vec_env/dummy_vec_env.py", line 78, in reset
+    obs, self.reset_infos[env_idx] = self.envs[env_idx].reset(seed=self._seeds[env_idx], **maybe_options)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/.local/lib/python3.12/site-packages/stable_baselines3/common/monitor.py", line 83, in reset
+    return self.env.reset(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BuildingEnergyEnv.reset() got an unexpected keyword argument 'seed'
