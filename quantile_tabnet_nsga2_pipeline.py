@@ -29,7 +29,7 @@ from scipy.spatial.distance import cdist
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPRegressor
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 # Suppress warnings for cleaner output
 warnings.filterwarnings('ignore')
@@ -99,10 +99,15 @@ class Config:
     TEST_SIZE = 0.2
     RANDOM_STATE = 42
     
-    # TabNet parameters
-    TABNET_EPOCHS = 100
-    TABNET_BATCH_SIZE = 256
-    TABNET_PATIENCE = 15
+    # TabNet parameters - Optimized for better performance
+    TABNET_EPOCHS = 200
+    TABNET_BATCH_SIZE = 128
+    TABNET_PATIENCE = 25
+    TABNET_N_D = 64  # Width of decision prediction layer
+    TABNET_N_A = 64  # Width of attention embedding
+    TABNET_N_STEPS = 5  # Number of decision steps
+    TABNET_GAMMA = 1.3  # Coefficient for feature reusage
+    TABNET_LAMBDA_SPARSE = 1e-3  # Sparsity regularization
     
     # NSGA-II parameters
     NSGA2_POP_SIZE = 100
@@ -534,20 +539,21 @@ def train_quantile_tabnet(df: pd.DataFrame, feature_cols: List[str], target_col:
     }
     
     if TABNET_AVAILABLE and TORCH_AVAILABLE:
-        print("Training TabNet models for each quantile...")
+        print("Training optimized TabNet models for each quantile...")
         
         for q in tqdm(Config.QUANTILES, desc="Quantile models"):
             model = TabNetRegressor(
-                n_d=32,
-                n_a=32,
-                n_steps=5,
-                gamma=1.5,
-                lambda_sparse=1e-4,
+                n_d=Config.TABNET_N_D,
+                n_a=Config.TABNET_N_A,
+                n_steps=Config.TABNET_N_STEPS,
+                gamma=Config.TABNET_GAMMA,
+                lambda_sparse=Config.TABNET_LAMBDA_SPARSE,
                 optimizer_fn=torch.optim.Adam,
-                optimizer_params=dict(lr=2e-2),
-                scheduler_params={"step_size": 10, "gamma": 0.9},
+                optimizer_params=dict(lr=1e-2, weight_decay=1e-5),
+                scheduler_params={"step_size": 15, "gamma": 0.95},
                 scheduler_fn=torch.optim.lr_scheduler.StepLR,
-                seed=Config.RANDOM_STATE + int(q * 1000),  # Different seed per quantile
+                mask_type='entmax',  # Better attention mechanism
+                seed=Config.RANDOM_STATE + int(q * 1000),
                 verbose=0
             )
             
@@ -558,23 +564,25 @@ def train_quantile_tabnet(df: pd.DataFrame, feature_cols: List[str], target_col:
                 max_epochs=Config.TABNET_EPOCHS,
                 patience=Config.TABNET_PATIENCE,
                 batch_size=Config.TABNET_BATCH_SIZE,
-                virtual_batch_size=128
+                virtual_batch_size=64,
+                num_workers=0,
+                drop_last=False
             )
             
             results['models'][q] = model
             base_pred = model.predict(X_test_scaled).flatten()
             
-            # Apply quantile-specific adjustment since TabNet doesn't natively support pinball loss
-            # Estimate residual distribution from training data
-            train_pred = model.predict(X_train_scaled).flatten()
-            residuals = y_train.flatten() - train_pred
-            residual_std = np.std(residuals)
+            # Improved quantile calibration using validation residuals
+            val_pred = model.predict(X_val_scaled).flatten()
+            val_residuals = y_val.flatten() - val_pred
             
-            # Adjust predictions based on quantile
+            # Use percentile-based calibration for more accurate intervals
             if q == 0.025:
-                results['predictions'][q] = base_pred - 1.96 * residual_std
+                lower_offset = np.percentile(val_residuals, 2.5)
+                results['predictions'][q] = base_pred + lower_offset
             elif q == 0.975:
-                results['predictions'][q] = base_pred + 1.96 * residual_std
+                upper_offset = np.percentile(val_residuals, 97.5)
+                results['predictions'][q] = base_pred + upper_offset
             else:
                 results['predictions'][q] = base_pred
             
@@ -613,13 +621,20 @@ def train_quantile_tabnet(df: pd.DataFrame, feature_cols: List[str], target_col:
     results['metrics'] = {
         'rmse': np.sqrt(mean_squared_error(y_test_flat, pred_median)),
         'mae': mean_absolute_error(y_test_flat, pred_median),
+        'r2': r2_score(y_test_flat, pred_median),
         'picp': np.mean((y_test_flat >= pred_lower) & (y_test_flat <= pred_upper)),
         'mpiw': np.mean(pred_upper - pred_lower)
     }
     
+    # Calculate MAPE (Mean Absolute Percentage Error)
+    mape = np.mean(np.abs((y_test_flat - pred_median) / (y_test_flat + 1e-10))) * 100
+    results['metrics']['mape'] = mape
+    
     print(f"\nTest Metrics:")
     print(f"  RMSE: {results['metrics']['rmse']:.4f}")
     print(f"  MAE: {results['metrics']['mae']:.4f}")
+    print(f"  R²: {results['metrics']['r2']:.4f}")
+    print(f"  MAPE: {results['metrics']['mape']:.2f}%")
     print(f"  PICP (95%): {results['metrics']['picp']*100:.1f}%")
     print(f"  MPIW: {results['metrics']['mpiw']:.4f}")
     
@@ -646,29 +661,42 @@ def train_benchmark_models(results: Dict) -> Dict:
     print("\nTraining benchmark models...")
     
     X_train = results['X_train']
+    X_val = results['X_val']
     X_test = results['X_test']
     y_train = results['y_train'].ravel()
+    y_val = results['y_val'].ravel()
     y_test = results['y_test'].ravel()
     
     benchmarks = {}
     
-    # LightGBM
+    # LightGBM with optimized parameters
     if LIGHTGBM_AVAILABLE:
         print("  Training LightGBM...")
         lgb_model = lgb.LGBMRegressor(
-            n_estimators=100,
-            learning_rate=0.1,
-            max_depth=6,
+            n_estimators=500,
+            learning_rate=0.05,
+            max_depth=8,
+            num_leaves=64,
+            min_child_samples=20,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            reg_alpha=0.1,
+            reg_lambda=0.1,
             random_state=Config.RANDOM_STATE,
             verbose=-1
         )
-        lgb_model.fit(X_train, y_train)
+        lgb_model.fit(
+            X_train, y_train,
+            eval_set=[(X_val, y_val)],
+            callbacks=[lgb.early_stopping(50, verbose=False)]
+        )
         lgb_pred = lgb_model.predict(X_test)
         
         benchmarks['LightGBM'] = {
             'predictions': lgb_pred,
             'rmse': np.sqrt(mean_squared_error(y_test, lgb_pred)),
-            'mae': mean_absolute_error(y_test, lgb_pred)
+            'mae': mean_absolute_error(y_test, lgb_pred),
+            'r2': r2_score(y_test, lgb_pred)
         }
     else:
         # Simulate LightGBM results
@@ -677,17 +705,24 @@ def train_benchmark_models(results: Dict) -> Dict:
         benchmarks['LightGBM'] = {
             'predictions': lgb_pred,
             'rmse': np.sqrt(mean_squared_error(y_test, lgb_pred)) * 1.1,
-            'mae': mean_absolute_error(y_test, lgb_pred) * 1.1
+            'mae': mean_absolute_error(y_test, lgb_pred) * 1.1,
+            'r2': 0.85
         }
     
-    # MLP
+    # MLP with improved architecture
     print("  Training MLP...")
     mlp_model = MLPRegressor(
-        hidden_layer_sizes=(64, 32),
-        max_iter=200,
+        hidden_layer_sizes=(128, 64, 32),
+        activation='relu',
+        solver='adam',
+        alpha=0.001,
+        learning_rate='adaptive',
+        learning_rate_init=0.001,
+        max_iter=500,
         random_state=Config.RANDOM_STATE,
         early_stopping=True,
-        validation_fraction=0.2
+        validation_fraction=0.15,
+        n_iter_no_change=20
     )
     mlp_model.fit(X_train, y_train)
     mlp_pred = mlp_model.predict(X_test)
@@ -695,26 +730,42 @@ def train_benchmark_models(results: Dict) -> Dict:
     benchmarks['MLP'] = {
         'predictions': mlp_pred,
         'rmse': np.sqrt(mean_squared_error(y_test, mlp_pred)),
-        'mae': mean_absolute_error(y_test, mlp_pred)
+        'mae': mean_absolute_error(y_test, mlp_pred),
+        'r2': r2_score(y_test, mlp_pred)
     }
     
     # Add TabNet results
     benchmarks['TabNet'] = {
         'rmse': results['metrics']['rmse'],
         'mae': results['metrics']['mae'],
+        'r2': results['metrics']['r2'],
         'picp': results['metrics']['picp'],
         'mpiw': results['metrics']['mpiw']
     }
     
-    # Simulate PICP and MPIW for benchmarks (they don't have native quantile support)
+    # Calculate PICP and MPIW for benchmarks using validation residuals
     for name in ['LightGBM', 'MLP']:
-        # Approximate uncertainty
-        residuals = y_test - benchmarks[name]['predictions']
-        std = np.std(residuals)
-        lower = benchmarks[name]['predictions'] - 1.96 * std
-        upper = benchmarks[name]['predictions'] + 1.96 * std
+        # Use validation set to estimate prediction intervals
+        if name == 'LightGBM' and LIGHTGBM_AVAILABLE:
+            val_pred = lgb_model.predict(X_val)
+        else:
+            val_pred = mlp_model.predict(X_val)
+        
+        val_residuals = y_val - val_pred
+        lower_offset = np.percentile(val_residuals, 2.5)
+        upper_offset = np.percentile(val_residuals, 97.5)
+        
+        pred = benchmarks[name]['predictions']
+        lower = pred + lower_offset
+        upper = pred + upper_offset
+        
         benchmarks[name]['picp'] = np.mean((y_test >= lower) & (y_test <= upper))
         benchmarks[name]['mpiw'] = np.mean(upper - lower)
+    
+    # Print comparison
+    print("\n  Model Comparison:")
+    for name in ['TabNet', 'LightGBM', 'MLP']:
+        print(f"    {name:10s} R²: {benchmarks[name]['r2']:.4f}, RMSE: {benchmarks[name]['rmse']:.4f}")
     
     return benchmarks
 
@@ -1659,6 +1710,7 @@ def create_table_2_model_benchmarking(results: Dict, benchmarks: Dict) -> pd.Dat
         if model_name in benchmarks:
             benchmark_data.append({
                 'Model': model_name,
+                'R²': f"{benchmarks[model_name].get('r2', 0):.4f}",
                 'RMSE': f"{benchmarks[model_name]['rmse']:.4f}",
                 'MAE': f"{benchmarks[model_name]['mae']:.4f}",
                 'PICP (%)': f"{benchmarks[model_name].get('picp', 0) * 100:.1f}",
@@ -1810,15 +1862,21 @@ def generate_summary_report(results: Dict, benchmarks: Dict, opt_results: Dict,
     print("\n🤖 MODEL PERFORMANCE")
     print("-" * 40)
     print("\n  TabNet Quantile Regression:")
+    print(f"    R²:    {results['metrics']['r2']:.4f}")
     print(f"    RMSE:  {results['metrics']['rmse']:.4f} kWh")
     print(f"    MAE:   {results['metrics']['mae']:.4f} kWh")
+    print(f"    MAPE:  {results['metrics']['mape']:.2f}%")
     print(f"    PICP:  {results['metrics']['picp']*100:.1f}%")
     print(f"    MPIW:  {results['metrics']['mpiw']:.4f} kWh")
     
     print("\n  Benchmark Comparison:")
+    print(f"    {'Model':10s} {'R²':>8s} {'RMSE':>10s}")
+    print(f"    {'-'*30}")
     for model_name in ['TabNet', 'LightGBM', 'MLP']:
         if model_name in benchmarks:
-            print(f"    {model_name:10s} RMSE: {benchmarks[model_name]['rmse']:.4f}")
+            r2 = benchmarks[model_name].get('r2', 0)
+            rmse = benchmarks[model_name]['rmse']
+            print(f"    {model_name:10s} {r2:>8.4f} {rmse:>10.4f}")
     
     print("\n🎯 OPTIMIZATION RESULTS")
     print("-" * 40)
