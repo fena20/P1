@@ -1,0 +1,10 @@
+# Table 2: Input Variables for the Prediction Model
+
+| Variable Category | Feature Name | Unit | Source | Relevance |
+|---|---|---|---|---|
+| Environmental | Outdoor Air Temperature | °C | BDG2 Weather | Core climatic driver for heating/cooling demand |
+| Environmental | Global Solar Radiation | W/m² | BDG2 Weather | Captures solar gains impacting cooling loads |
+| Environmental | Relative Humidity | % | BDG2 Weather | Influences latent loads and perceived comfort |
+| Temporal | Hour of Day | 0-23 | Time Index | Represents daily occupancy and behavior patterns |
+| Temporal | Day of Week | 1-7 | Time Index | Encodes weekly usage patterns (workdays vs weekends) |
+| Control | Cooling/Heating Setpoint | °C | Control Schedule | Primary optimization variable and control parameter |

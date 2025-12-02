@@ -1,0 +1,108 @@
+================================================================================
+OUTPUT FOLDER SUMMARY
+================================================================================
+
+Generated: All figures and tables for publication
+Location: /workspace/output/
+Total Files: 24 files
+
+================================================================================
+FIGURES (8 files)
+================================================================================
+
+Location: output/figures/
+Format: PNG (300 DPI) + PDF
+
+1. figure1_framework_schematic
+   - Framework overview diagram
+   - Size: 122 KB (PNG), 25 KB (PDF)
+
+2. figure2_daily_optimization_profile
+   - Daily control profiles comparison
+   - Size: 223 KB (PNG), 30 KB (PDF)
+
+3. figure3_pareto_front
+   - Cost-comfort trade-off visualization
+   - Size: 116 KB (PNG), 23 KB (PDF)
+
+4. figure4_cross_building_performance
+   - Cross-building and climate analysis
+   - Size: 119 KB (PNG), 27 KB (PDF)
+
+Total Figure Size: ~580 KB (PNG) + ~105 KB (PDF)
+
+================================================================================
+TABLES (15 files)
+================================================================================
+
+Location: output/tables/
+Formats: CSV, Markdown (.md), LaTeX (.tex)
+
+1. table1_building_characteristics
+   - 5 selected buildings with characteristics
+   - Columns: Building ID, Primary Use, Floor Area, Climate Zone, Year Built, Resolution
+
+2. table2_input_variables
+   - 6 input variables for prediction model
+   - Columns: Category, Feature Name, Unit, Source, Relevance
+
+3. table3_optimization_constraints
+   - Optimization problem formulation
+   - Columns: Parameter, Description, Value/Constraint
+
+4. table4_comparative_results
+   - Baseline vs. optimized controller comparison
+   - Columns: Metric, Baseline, Optimized, Improvement (%)
+
+5. table5_pareto_solutions_summary
+   - Summary of Pareto-optimal solutions
+   - Columns: Solution ID, Energy Cost, Comfort Penalty, Total Cost, Avg Setpoint, Range
+
+Each table available in 3 formats: CSV, Markdown, LaTeX
+
+================================================================================
+FILE STRUCTURE
+================================================================================
+
+output/
+├── README.md                          # This documentation
+├── OUTPUT_SUMMARY.txt                 # This summary
+├── figures/
+│   ├── figure1_framework_schematic.png/pdf
+│   ├── figure2_daily_optimization_profile.png/pdf
+│   ├── figure3_pareto_front.png/pdf
+│   └── figure4_cross_building_performance.png/pdf
+└── tables/
+    ├── table1_building_characteristics.csv/md/tex
+    ├── table2_input_variables.csv/md/tex
+    ├── table3_optimization_constraints.csv/md/tex
+    ├── table4_comparative_results.csv/md/tex
+    └── table5_pareto_solutions_summary.csv/md/tex
+
+================================================================================
+USAGE
+================================================================================
+
+For LaTeX Publications:
+  \input{output/tables/table1_building_characteristics.tex}
+  \includegraphics{output/figures/figure1_framework_schematic.pdf}
+
+For Markdown Reports:
+  Include .md files directly or convert to HTML/PDF
+
+For Data Analysis:
+  Load .csv files in Python/R/Excel
+
+For Presentations:
+  Use PNG figures or convert PDFs as needed
+
+================================================================================
+QUALITY SPECIFICATIONS
+================================================================================
+
+- Figures: 300 DPI resolution (publication quality)
+- Tables: Formatted for Applied Energy journal style
+- All outputs ready for direct use in publications
+- Multiple formats for maximum compatibility
+
+================================================================================
