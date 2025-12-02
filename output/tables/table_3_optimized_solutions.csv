@@ -1,0 +1,4 @@
+Mode,Heating Setpoint (°C),Cooling Setpoint (°C),Schedule Shift (h),Energy (kWh),Comfort Violation (h)
+Eco-Mode,16.2,27.8,-0.1,218.1,37.16
+Comfort-Mode,23.1,27.4,0.1,329.3,0.15
+Balanced (TOPSIS),21.3,27.7,-0.9,299.1,1.71
