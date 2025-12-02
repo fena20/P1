@@ -232,22 +232,23 @@ def generate_summary_statistics(train_data, test_data):
     
     stats_df = pd.DataFrame(summary_stats)
     
-    # Format for LaTeX
-    latex_table = stats_df.to_latex(
-        index=False,
-        float_format="%.3f",
-        caption="Summary Statistics of Key Variables",
-        label="tab:summary_stats"
-    )
-    
-    # Save LaTeX table
-    with open(f"{TABLES_DIR}/table1.tex", 'w') as f:
-        f.write(latex_table)
-    
-    # Also save as CSV for reference
+    # Save as CSV (primary format)
     stats_df.to_csv(f"{TABLES_DIR}/table1.csv", index=False)
     
-    print(f"Table 1 saved to {TABLES_DIR}/table1.tex")
+    # Also save LaTeX format for paper
+    try:
+        latex_table = stats_df.to_latex(
+            index=False,
+            float_format="%.3f",
+            caption="Summary Statistics of Key Variables",
+            label="tab:summary_stats"
+        )
+        with open(f"{TABLES_DIR}/table1.tex", 'w') as f:
+            f.write(latex_table)
+    except:
+        pass  # LaTeX optional
+    
+    print(f"Table 1 saved to {TABLES_DIR}/table1.csv")
     
     return stats_df
 

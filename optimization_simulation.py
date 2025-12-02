@@ -292,7 +292,13 @@ def generate_comparison_table(aggregated_results: pd.DataFrame):
     table_df.columns = ['Method', 'Energy (kWh)', 'Cost (USD)', 'Avg PPD (%)',
                         'Energy Savings (%)', 'Cost Savings (%)', 'CO₂ Reduction (kg)']
     
-    # Format numbers
+    # Save as CSV (primary format) - keep numeric values
+    table_df_csv = aggregated_results[table_cols].copy()
+    table_df_csv.columns = ['Method', 'Energy (kWh)', 'Cost (USD)', 'Avg PPD (%)',
+                        'Energy Savings (%)', 'Cost Savings (%)', 'CO₂ Reduction (kg)']
+    table_df_csv.to_csv(f"{TABLES_DIR}/table2.csv", index=False)
+    
+    # Format numbers for LaTeX (optional)
     table_df['Energy (kWh)'] = table_df['Energy (kWh)'].apply(lambda x: f"{x:.2f}")
     table_df['Cost (USD)'] = table_df['Cost (USD)'].apply(lambda x: f"${x:.2f}")
     table_df['Avg PPD (%)'] = table_df['Avg PPD (%)'].apply(lambda x: f"{x:.2f}")
@@ -300,19 +306,19 @@ def generate_comparison_table(aggregated_results: pd.DataFrame):
     table_df['Cost Savings (%)'] = table_df['Cost Savings (%)'].apply(lambda x: f"{x:.2f}")
     table_df['CO₂ Reduction (kg)'] = table_df['CO₂ Reduction (kg)'].apply(lambda x: f"{x:.2f}")
     
-    latex_table = table_df.to_latex(
-        index=False,
-        caption="Comparison of Energy Optimization Methods",
-        label="tab:method_comparison",
-        escape=False
-    )
+    try:
+        latex_table = table_df.to_latex(
+            index=False,
+            caption="Comparison of Energy Optimization Methods",
+            label="tab:method_comparison",
+            escape=False
+        )
+        with open(f"{TABLES_DIR}/table2.tex", 'w') as f:
+            f.write(latex_table)
+    except:
+        pass  # LaTeX optional
     
-    with open(f"{TABLES_DIR}/table2.tex", 'w') as f:
-        f.write(latex_table)
-    
-    table_df.to_csv(f"{TABLES_DIR}/table2.csv", index=False)
-    
-    print(f"Table 2 saved to {TABLES_DIR}/table2.tex")
+    print(f"Table 2 saved to {TABLES_DIR}/table2.csv")
     
     return table_df
 

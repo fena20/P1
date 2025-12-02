@@ -1,0 +1,4 @@
+Model,Metric,Train Value,Test Value,Unit
+LSTM Energy,R²,0.952,0.948,-
+LSTM Comfort,R²,0.918,0.915,-
+PPO Agent,Mean Reward,-125.500,-118.200,USD
