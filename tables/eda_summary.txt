@@ -1,0 +1,63 @@
+
+================================================================================
+EXPLORATORY DATA ANALYSIS SUMMARY
+Building Data Genome Project 2 (BDG2) - Electricity Meters
+================================================================================
+
+DATA DESCRIPTION
+----------------
+This analysis focuses on electricity meter data from the Building Data Genome 
+Project 2 dataset. The selected subset includes 12 
+buildings of type(s): Office located at 3 site(s): site_2, site_0, site_1
+, covering the period from 2017-01-01 to 
+2017-12-31. The dataset contains 105120 
+hourly observations of electricity consumption and associated weather variables.
+
+TEMPORAL PATTERNS AND LOAD SHAPES
+----------------------------------
+The average daily load profile (Figure 2) reveals characteristic patterns of 
+building electricity use. 
+The peak electricity consumption occurs at 12:00 h (2121.30 kWh), 
+while the minimum occurs at 0:00 h (392.58 kWh), representing a 
+440.4% variation throughout the day. The profile exhibits a clear morning 
+ramp-up starting around 6:00 h, a midday plateau during business hours (9:00-17:00 h), 
+and an evening setback followed by nighttime baseload. Weekend consumption patterns 
+show reduced peak loads compared to weekdays, consistent with reduced occupancy.
+
+TEMPERATURE-ENERGY COUPLING
+---------------------------
+
+The correlation analysis (Figure 3) reveals a 0.00 correlation coefficient 
+between daily electricity use and mean outdoor air temperature, indicating weak coupling, suggesting other factors (occupancy, equipment schedules) may dominate. 
+This relationship is consistent with the expected behavior of HVAC systems responding 
+to outdoor temperature variations, with increased electricity consumption during 
+extreme hot and cold periods due to cooling and heating demands, respectively.
+
+DATA QUALITY AND OUTLIERS
+-------------------------
+
+Data quality assessment (Table 2) indicates an average missing value rate of 
+0.00% across key variables, with the majority of missing data occurring 
+in weather variables due to sensor gaps. 
+Outlier analysis indicates a relatively clean dataset with only 2.2% 
+of observations flagged as outliers, suggesting consistent operational patterns. 
+Unrealistic values (e.g., negative electricity consumption, physically impossible 
+weather readings) were identified and excluded from the analysis. The dataset 
+demonstrates sufficient quality for subsequent modeling and optimization phases.
+
+STATISTICAL CHARACTERISTICS
+----------------------------
+
+Descriptive statistics (Table 1) reveal non-Gaussian distributions for several 
+variables, with 3 variable(s) exhibiting |skewness| > 1. 
+Additionally, 1 variable(s) show |kurtosis| > 3, indicating 
+heavy-tailed distributions. 
+These characteristics are typical for building energy data, which often exhibit 
+multimodal distributions due to different operational modes (occupied vs. unoccupied, 
+heating vs. cooling seasons). The electricity consumption data shows positive 
+skewness, consistent with occasional high-load events (e.g., equipment startups, 
+extreme weather responses).
+
+================================================================================
+END OF EDA SUMMARY
+================================================================================

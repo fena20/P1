@@ -1,0 +1,6 @@
+Variable,Description,Unit,Missing values (%),Number of unrealistic values,Number of outliers (IQR),Outliers (%)
+Hourly electricity use,hourly electricity use,kWh,0.00,148,7178,6.83
+Outdoor air temperature,outdoor air temperature,°C,0.00,0,0,0.00
+Dew point temperature,dew point temperature,°C,0.00,0,0,0.00
+Wind speed,wind speed,m/s,0.00,0,3610,3.43
+Sea level pressure,sea level pressure,hPa,0.00,0,778,0.74
