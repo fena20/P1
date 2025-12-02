@@ -1,0 +1,31 @@
+{
+  "building_id": "Panther_lodging_Marisol",
+  "model_type": "LSTM",
+  "lookback": 24,
+  "features": [
+    "airTemperature",
+    "windSpeed",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "input_shape": [
+    24,
+    5
+  ],
+  "epochs_trained": 15,
+  "val_metrics": {
+    "rmse": 15.462296800645511,
+    "mae": 11.433175215135355,
+    "r2": 0.4118113556174753,
+    "cvrmse": 8.608381369091829,
+    "nmbe": -0.01240759614505493
+  },
+  "test_metrics": {
+    "rmse": 32.092340769279296,
+    "mae": 25.417354825608523,
+    "r2": -0.6044449963731267,
+    "cvrmse": 19.773570076489193,
+    "nmbe": 11.020685222521582
+  }
+}

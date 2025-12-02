@@ -1,0 +1,312 @@
+{
+  "lstm": {
+    "Hog_lodging_Ora": {
+      "building_id": "Hog_lodging_Ora",
+      "model_type": "LSTM",
+      "lookback": 24,
+      "features": [
+        "airTemperature",
+        "windSpeed",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "input_shape": [
+        24,
+        5
+      ],
+      "epochs_trained": 23,
+      "val_metrics": {
+        "rmse": 61.62861499329496,
+        "mae": 52.279144192700784,
+        "r2": -0.8214249483022946,
+        "cvrmse": 24.740765326431504,
+        "nmbe": 17.540814434093004
+      },
+      "test_metrics": {
+        "rmse": 120.33804546751581,
+        "mae": 109.97383940754202,
+        "r2": -4.657174224932358,
+        "cvrmse": 56.758677176951146,
+        "nmbe": 51.86323444191954
+      }
+    },
+    "Panther_lodging_Kara": {
+      "building_id": "Panther_lodging_Kara",
+      "model_type": "LSTM",
+      "lookback": 24,
+      "features": [
+        "airTemperature",
+        "windSpeed",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "input_shape": [
+        24,
+        5
+      ],
+      "epochs_trained": 16,
+      "val_metrics": {
+        "rmse": 15.933735880446264,
+        "mae": 11.664859351604475,
+        "r2": 0.46850864968683803,
+        "cvrmse": 8.83414592670409,
+        "nmbe": 1.0987204070473424
+      },
+      "test_metrics": {
+        "rmse": 33.50531987159619,
+        "mae": 26.58827146390664,
+        "r2": -0.7383119643777616,
+        "cvrmse": 20.607742747806178,
+        "nmbe": 13.855530400979058
+      }
+    },
+    "Peacock_lodging_Jamaal": {
+      "building_id": "Peacock_lodging_Jamaal",
+      "model_type": "LSTM",
+      "lookback": 24,
+      "features": [
+        "airTemperature",
+        "windSpeed",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "input_shape": [
+        24,
+        5
+      ],
+      "epochs_trained": 26,
+      "val_metrics": {
+        "rmse": 37.25184217679175,
+        "mae": 29.676977510264486,
+        "r2": 0.40414573117711383,
+        "cvrmse": 14.94877891391046,
+        "nmbe": -0.9080875073398859
+      },
+      "test_metrics": {
+        "rmse": 62.71636424498236,
+        "mae": 49.26935399816177,
+        "r2": -0.36027760051744595,
+        "cvrmse": 29.395931533789625,
+        "nmbe": 20.27752141063902
+      }
+    },
+    "Fox_lodging_Helen": {
+      "building_id": "Fox_lodging_Helen",
+      "model_type": "LSTM",
+      "lookback": 24,
+      "features": [
+        "airTemperature",
+        "windSpeed",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "input_shape": [
+        24,
+        5
+      ],
+      "epochs_trained": 15,
+      "val_metrics": {
+        "rmse": 47.609954820151955,
+        "mae": 36.23414157475046,
+        "r2": 0.5731906853138931,
+        "cvrmse": 11.352302188989746,
+        "nmbe": 4.802722264522905
+      },
+      "test_metrics": {
+        "rmse": 158.01361481291553,
+        "mae": 132.7873590918044,
+        "r2": -1.5125933620871836,
+        "cvrmse": 48.34142466819088,
+        "nmbe": 38.64323569006615
+      }
+    },
+    "Bull_lodging_Travis": {
+      "building_id": "Bull_lodging_Travis",
+      "model_type": "LSTM",
+      "lookback": 24,
+      "features": [
+        "airTemperature",
+        "windSpeed",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "input_shape": [
+        24,
+        5
+      ],
+      "epochs_trained": 15,
+      "val_metrics": {
+        "rmse": 52.780914343143266,
+        "mae": 39.057202237684685,
+        "r2": 0.7088919893867204,
+        "cvrmse": 5.691512050719888,
+        "nmbe": 1.1175224296730772
+      },
+      "test_metrics": {
+        "rmse": 201.21466278980105,
+        "mae": 155.64579454386362,
+        "r2": -1.4494578010390797,
+        "cvrmse": 25.640454300654852,
+        "nmbe": 19.42235496483064
+      }
+    },
+    "Panther_lodging_Kirk": {
+      "building_id": "Panther_lodging_Kirk",
+      "model_type": "LSTM",
+      "lookback": 24,
+      "features": [
+        "airTemperature",
+        "windSpeed",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "input_shape": [
+        24,
+        5
+      ],
+      "epochs_trained": 20,
+      "val_metrics": {
+        "rmse": 15.365014409420992,
+        "mae": 11.761551978053198,
+        "r2": 0.3203329869446715,
+        "cvrmse": 9.48190486414487,
+        "nmbe": -0.6762655201151503
+      },
+      "test_metrics": {
+        "rmse": 29.49640492525137,
+        "mae": 24.395232242628246,
+        "r2": -0.7344682296052321,
+        "cvrmse": 20.283762031169605,
+        "nmbe": 10.910307954848825
+      }
+    },
+    "Rat_lodging_Ben": {
+      "building_id": "Rat_lodging_Ben",
+      "model_type": "LSTM",
+      "lookback": 24,
+      "features": [
+        "airTemperature",
+        "windSpeed",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "input_shape": [
+        24,
+        5
+      ],
+      "epochs_trained": 18,
+      "val_metrics": {
+        "rmse": 46.30044884963624,
+        "mae": 37.51526441281341,
+        "r2": 0.6281361083501387,
+        "cvrmse": 14.544538071057161,
+        "nmbe": 7.696976125046646
+      },
+      "test_metrics": {
+        "rmse": 33.360598343246174,
+        "mae": 26.490635328189345,
+        "r2": -0.2644738402760656,
+        "cvrmse": 13.353673448797926,
+        "nmbe": 3.460999746911981
+      }
+    },
+    "Hog_lodging_Shanti": {
+      "building_id": "Hog_lodging_Shanti",
+      "model_type": "LSTM",
+      "lookback": 24,
+      "features": [
+        "airTemperature",
+        "windSpeed",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "input_shape": [
+        24,
+        5
+      ],
+      "epochs_trained": 12,
+      "val_metrics": {
+        "rmse": 163.15948338236865,
+        "mae": 141.60404370266355,
+        "r2": -2.513946645510984,
+        "cvrmse": 50.80499368079799,
+        "nmbe": -43.647667468582505
+      },
+      "test_metrics": {
+        "rmse": 135.47916524753813,
+        "mae": 119.03712414465879,
+        "r2": -3.111092629557385,
+        "cvrmse": 44.608371697681456,
+        "nmbe": -39.19460435090393
+      }
+    },
+    "Panther_lodging_Marisol": {
+      "building_id": "Panther_lodging_Marisol",
+      "model_type": "LSTM",
+      "lookback": 24,
+      "features": [
+        "airTemperature",
+        "windSpeed",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "input_shape": [
+        24,
+        5
+      ],
+      "epochs_trained": 15,
+      "val_metrics": {
+        "rmse": 15.462296800645511,
+        "mae": 11.433175215135355,
+        "r2": 0.4118113556174753,
+        "cvrmse": 8.608381369091829,
+        "nmbe": -0.01240759614505493
+      },
+      "test_metrics": {
+        "rmse": 32.092340769279296,
+        "mae": 25.417354825608523,
+        "r2": -0.6044449963731267,
+        "cvrmse": 19.773570076489193,
+        "nmbe": 11.020685222521582
+      }
+    }
+  },
+  "xgboost": {
+    "Hog_lodging_Ora": {
+      "error": "Object of type float32 is not JSON serializable"
+    },
+    "Panther_lodging_Kara": {
+      "error": "Object of type float32 is not JSON serializable"
+    },
+    "Peacock_lodging_Jamaal": {
+      "error": "Object of type float32 is not JSON serializable"
+    },
+    "Fox_lodging_Helen": {
+      "error": "Object of type float32 is not JSON serializable"
+    },
+    "Bull_lodging_Travis": {
+      "error": "Object of type float32 is not JSON serializable"
+    },
+    "Panther_lodging_Kirk": {
+      "error": "Object of type float32 is not JSON serializable"
+    },
+    "Rat_lodging_Ben": {
+      "error": "Object of type float32 is not JSON serializable"
+    },
+    "Hog_lodging_Shanti": {
+      "error": "Object of type float32 is not JSON serializable"
+    },
+    "Panther_lodging_Marisol": {
+      "error": "Object of type float32 is not JSON serializable"
+    }
+  }
+}

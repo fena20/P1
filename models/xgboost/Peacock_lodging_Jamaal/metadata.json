@@ -1,0 +1,14 @@
+{
+  "building_id": "Peacock_lodging_Jamaal",
+  "model_type": "XGBoost",
+  "lookback": 24,
+  "features": [
+    "airTemperature",
+    "windSpeed",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "n_estimators": 200,
+  "max_depth": 6
+}

@@ -1,0 +1,31 @@
+{
+  "building_id": "Hog_lodging_Shanti",
+  "model_type": "LSTM",
+  "lookback": 24,
+  "features": [
+    "airTemperature",
+    "windSpeed",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "input_shape": [
+    24,
+    5
+  ],
+  "epochs_trained": 12,
+  "val_metrics": {
+    "rmse": 163.15948338236865,
+    "mae": 141.60404370266355,
+    "r2": -2.513946645510984,
+    "cvrmse": 50.80499368079799,
+    "nmbe": -43.647667468582505
+  },
+  "test_metrics": {
+    "rmse": 135.47916524753813,
+    "mae": 119.03712414465879,
+    "r2": -3.111092629557385,
+    "cvrmse": 44.608371697681456,
+    "nmbe": -39.19460435090393
+  }
+}

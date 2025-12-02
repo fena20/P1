@@ -1,0 +1,31 @@
+{
+  "building_id": "Panther_lodging_Kara",
+  "model_type": "LSTM",
+  "lookback": 24,
+  "features": [
+    "airTemperature",
+    "windSpeed",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "input_shape": [
+    24,
+    5
+  ],
+  "epochs_trained": 16,
+  "val_metrics": {
+    "rmse": 15.933735880446264,
+    "mae": 11.664859351604475,
+    "r2": 0.46850864968683803,
+    "cvrmse": 8.83414592670409,
+    "nmbe": 1.0987204070473424
+  },
+  "test_metrics": {
+    "rmse": 33.50531987159619,
+    "mae": 26.58827146390664,
+    "r2": -0.7383119643777616,
+    "cvrmse": 20.607742747806178,
+    "nmbe": 13.855530400979058
+  }
+}

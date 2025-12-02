@@ -1,0 +1,31 @@
+{
+  "building_id": "Panther_lodging_Kirk",
+  "model_type": "LSTM",
+  "lookback": 24,
+  "features": [
+    "airTemperature",
+    "windSpeed",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "input_shape": [
+    24,
+    5
+  ],
+  "epochs_trained": 20,
+  "val_metrics": {
+    "rmse": 15.365014409420992,
+    "mae": 11.761551978053198,
+    "r2": 0.3203329869446715,
+    "cvrmse": 9.48190486414487,
+    "nmbe": -0.6762655201151503
+  },
+  "test_metrics": {
+    "rmse": 29.49640492525137,
+    "mae": 24.395232242628246,
+    "r2": -0.7344682296052321,
+    "cvrmse": 20.283762031169605,
+    "nmbe": 10.910307954848825
+  }
+}

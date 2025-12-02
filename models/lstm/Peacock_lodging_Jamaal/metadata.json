@@ -1,0 +1,31 @@
+{
+  "building_id": "Peacock_lodging_Jamaal",
+  "model_type": "LSTM",
+  "lookback": 24,
+  "features": [
+    "airTemperature",
+    "windSpeed",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "input_shape": [
+    24,
+    5
+  ],
+  "epochs_trained": 26,
+  "val_metrics": {
+    "rmse": 37.25184217679175,
+    "mae": 29.676977510264486,
+    "r2": 0.40414573117711383,
+    "cvrmse": 14.94877891391046,
+    "nmbe": -0.9080875073398859
+  },
+  "test_metrics": {
+    "rmse": 62.71636424498236,
+    "mae": 49.26935399816177,
+    "r2": -0.36027760051744595,
+    "cvrmse": 29.395931533789625,
+    "nmbe": 20.27752141063902
+  }
+}

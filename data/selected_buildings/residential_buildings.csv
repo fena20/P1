@@ -1,0 +1,146 @@
+building_id,site_id,building_id_kaggle,site_id_kaggle,primaryspaceusage,sub_primaryspaceusage,sqm,sqft,lat,lng,timezone,electricity,hotwater,chilledwater,steam,water,irrigation,solar,gas,industry,subindustry,heatingtype,yearbuilt,date_opened,numberoffloors,occupants,energystarscore,eui,site_eui,source_eui,leed_level,rating,climate_zone
+Peacock_lodging_Jamaal,Peacock,787.0,6.0,Lodging/residential,Dormitory,25900.9,278795.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Hog_lodging_Shanti,Hog,1154.0,13.0,Lodging/residential,Dormitory,24355.1,262156.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,48,129.4,188.6,130,,,Cold
+Hog_lodging_Ora,Hog,1091.0,13.0,Lodging/residential,Dormitory,21678.1,233341.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,51,113.1,182.2,113.8,,,Cold
+Hog_lodging_Shonda,Hog,1070.0,13.0,Lodging/residential,Dormitory,21437.1,230747.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,54,110,176.4,110.4,,,Cold
+Hog_lodging_Retha,Hog,1222.0,13.0,Lodging/residential,Dormitory,17389.0,187174.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,,,,,,,,,,,,,,51,101.1,187,101.1,,,Cold
+Hog_lodging_Edgar,Hog,,13.0,Lodging/residential,Dormitory,16494.9,177550.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,,Yes,,,,,,,,,,,,100,19.5,46.1,19.5,,,Cold
+Hog_lodging_Mauricio,Hog,1100.0,13.0,Lodging/residential,Dormitory,16251.0,174924.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,,Yes,,,,,,,,,,,,45,120.1,201.9,120.7,,,Cold
+Cockatoo_lodging_Tessie,Cockatoo,1404.0,15.0,Lodging/residential,Dormitory,15727.5,169290.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,2006.0,,,,,,,,,,Cold
+Cockatoo_lodging_Emory,Cockatoo,1401.0,15.0,Lodging/residential,Dormitory,15681.2,168791.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,,,,,,Education,College/University,,1946.0,,,,,,,,,,Cold
+Cockatoo_lodging_Cletus,Cockatoo,1399.0,15.0,Lodging/residential,Dormitory,15497.5,166814.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,1929.0,,,,,,,,,,Cold
+Hog_lodging_Francisco,Hog,1186.0,13.0,Lodging/residential,Dormitory,14592.3,157070.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,,Yes,,,,,,,,,,,,51,120,190.6,121.6,,,Cold
+Hog_lodging_Hal,Hog,1124.0,13.0,Lodging/residential,Dormitory,14241.9,153299.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,,Yes,,,,,,,,,,,,54,110.8,184.7,109.1,,,Cold
+Cockatoo_lodging_Elvia,Cockatoo,1440.0,15.0,Lodging/residential,Hotel,13962.8,150294.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,1987.0,,,,,,,,,,Cold
+Cockatoo_lodging_Kyle,Cockatoo,1405.0,15.0,Lodging/residential,Dormitory,13275.9,142901.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,2007.0,,,,,,,,,,Cold
+Hog_lodging_Brian,Hog,1203.0,13.0,Lodging/residential,Dormitory,12876.5,138602.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,61,115,170,115.7,,,Cold
+Cockatoo_lodging_Lynne,Cockatoo,1406.0,15.0,Lodging/residential,Dormitory,12683.3,136522.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,2005.0,,,,,,,,,,Cold
+Cockatoo_lodging_Javier,Cockatoo,1402.0,15.0,Lodging/residential,Dormitory,12411.3,133594.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,1961.0,,,,,,,,,,Cold
+Cockatoo_lodging_Homer,Cockatoo,1365.0,15.0,Lodging/residential,Dormitory,12046.2,129664.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,,,,,,Education,College/University,,1941.0,,,,,,,,,,Cold
+Peacock_lodging_Lou,Peacock,781.0,6.0,Lodging/residential,Dormitory,11895.7,128044.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,,,,,,,Education,College/University,,,,,,,,,,,,Cold
+Hog_lodging_Celeste,Hog,1076.0,13.0,Lodging/residential,Dormitory,10874.7,117054.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,,Yes,,,,,,,,,,,,82,80.1,134.9,81.2,,,Cold
+Peacock_lodging_Sergio,Peacock,779.0,6.0,Lodging/residential,Dormitory,10498.0,113000.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Peacock_lodging_Wes,Peacock,777.0,6.0,Lodging/residential,Dormitory,9828.3,105791.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Robin_lodging_Elmer,Robin,129.0,1.0,Lodging/residential,Dormitory,9565.0,102957.0,51.51878965384613,-0.1345562307692307,Europe/London,Yes,,,,,,,,Education,College/University,Gas,1968.0,,7.0,,,,,,,G,Cold
+Robin_lodging_Renea,Robin,128.0,1.0,Lodging/residential,Dormitory,9548.0,102774.0,51.51878965384613,-0.1345562307692307,Europe/London,Yes,,,,,,,,Education,College/University,Gas,1956.0,,7.0,,,,,,,E,Cold
+Cockatoo_lodging_Albert,Cockatoo,1395.0,15.0,Lodging/residential,Dormitory,9162.5,98624.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Cockatoo_lodging_Kerri,Cockatoo,1396.0,15.0,Lodging/residential,Dormitory,8949.9,96336.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,1913.0,,,,,,,,,,Cold
+Peacock_lodging_Matthew,Peacock,774.0,6.0,Lodging/residential,Dormitory,8686.4,93500.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Peacock_lodging_Mathew,Peacock,773.0,6.0,Lodging/residential,Dormitory,8669.1,93313.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Cockatoo_lodging_Raphael,Cockatoo,1407.0,15.0,Lodging/residential,Dormitory,7724.0,83141.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,,,,,,Education,College/University,,2006.0,,,,,,,,,,Cold
+Robin_lodging_Celia,Robin,132.0,1.0,Lodging/residential,Dormitory,7721.0,83108.0,51.51878965384613,-0.1345562307692307,Europe/London,Yes,,,,,,,,Education,College/University,Gas,1995.0,,8.0,,,,,,,D,Cold
+Peacock_lodging_James,Peacock,771.0,6.0,Lodging/residential,Dormitory,7702.7,82911.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Cockatoo_lodging_Josephine,Cockatoo,1403.0,15.0,Lodging/residential,Dormitory,7287.1,78438.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,,,,,,Education,College/University,,2004.0,,,,,,,,,,Cold
+Hog_lodging_Nikki,Hog,1184.0,13.0,Lodging/residential,Dormitory,6929.1,74584.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,,Yes,,,,,,,,,,,,84,68.7,124.3,69.5,,,Cold
+Robin_lodging_Janie,Robin,131.0,1.0,Lodging/residential,Dormitory,6193.0,66661.0,51.51878965384613,-0.1345562307692307,Europe/London,Yes,,,,,,,,Education,College/University,Electric,1930.0,,7.0,,,,,,,E,Cold
+Robin_lodging_Phillip,Robin,135.0,1.0,Lodging/residential,Dormitory,6181.0,66532.0,51.51878965384613,-0.1345562307692307,Europe/London,Yes,,,,,,,,Education,College/University,Gas,1967.0,,10.0,,,,,,,D,Cold
+Cockatoo_lodging_Jim,Cockatoo,1413.0,15.0,Lodging/residential,Dormitory,6131.5,65999.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,1975.0,,,,,,,,,,Cold
+Cockatoo_lodging_Jarrod,Cockatoo,1414.0,15.0,Lodging/residential,Dormitory,6100.3,65663.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,1975.0,,,,,,,,,,Cold
+Robin_lodging_Oliva,Robin,133.0,1.0,Lodging/residential,Dormitory,6013.0,64723.0,51.51878965384613,-0.1345562307692307,Europe/London,Yes,,,,,,,,Education,College/University,Gas,1960.0,,8.0,,,,,,,C,Cold
+Robin_lodging_Dorthy,Robin,130.0,1.0,Lodging/residential,Dormitory,5842.9,62893.0,51.51878965384613,-0.1345562307692307,Europe/London,Yes,,,,,,,,Education,College/University,Gas,1960.0,,16.0,,,,,,,F,Cold
+Cockatoo_lodging_Katharine,Cockatoo,1358.0,15.0,Lodging/residential,Dormitory,5707.9,61439.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,1903.0,,,,,,,,,,Cold
+Robin_lodging_Armand,Robin,136.0,1.0,Lodging/residential,Dormitory,5246.0,56467.0,51.51878965384613,-0.1345562307692307,Europe/London,Yes,,,,,,,,Education,College/University,Gas,1960.0,,9.0,,,,,,,D,Cold
+Robin_lodging_Pricilla,Robin,134.0,1.0,Lodging/residential,Dormitory,4607.0,49589.0,51.51878965384613,-0.1345562307692307,Europe/London,Yes,,,,,,,,Education,College/University,Electric,1998.0,,8.0,,,,,,,E,Cold
+Cockatoo_lodging_Lana,Cockatoo,1409.0,15.0,Lodging/residential,Dormitory,4541.2,48881.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,1902.0,,,,,,,,,,Cold
+Peacock_lodging_Nova,Peacock,759.0,6.0,Lodging/residential,Dormitory,4507.6,48519.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Peacock_lodging_Terrie,Peacock,758.0,6.0,Lodging/residential,Dormitory,4367.1,47007.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Peacock_lodging_Chloe,Peacock,756.0,6.0,Lodging/residential,Dormitory,4120.4,44352.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Cockatoo_lodging_Linwood,Cockatoo,1418.0,15.0,Lodging/residential,Dormitory,3837.1,41302.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,1975.0,,,,,,,,,,Cold
+Cockatoo_lodging_Eric,Cockatoo,1416.0,15.0,Lodging/residential,Dormitory,3830.9,41236.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,1975.0,,,,,,,,,,Cold
+Cockatoo_lodging_Johnathan,Cockatoo,1419.0,15.0,Lodging/residential,Dormitory,3774.6,40629.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,1975.0,,,,,,,,,,Cold
+Cockatoo_lodging_Carmen,Cockatoo,1415.0,15.0,Lodging/residential,Dormitory,3761.8,40492.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,,,,,,Education,College/University,,1975.0,,,,,,,,,,Cold
+Cockatoo_lodging_Olga,Cockatoo,1417.0,15.0,Lodging/residential,Dormitory,3758.0,40451.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,1975.0,,,,,,,,,,Cold
+Cockatoo_lodging_Alicia,Cockatoo,1412.0,15.0,Lodging/residential,Dormitory,3673.2,39538.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,1953.0,,,,,,,,,,Cold
+Mouse_lodging_Vicente,Mouse,,,Lodging/residential,Hotel,3489.0,37555.0,51.52193899999999,-0.120069,Europe/London,Yes,,,,,,,,Hospitality,Hotel,Gas Boilers,2006.0,,7.0,,,,,,,F,Cold
+Peacock_lodging_Francesca,Peacock,749.0,6.0,Lodging/residential,Dormitory,3338.6,35936.0,40.349999999999966,-74.69999999999995,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,,,,,,,,,,,Cold
+Cockatoo_lodging_Jimmie,Cockatoo,1447.0,15.0,Lodging/residential,Dormitory,2766.2,29775.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,,,,,,Education,College/University,,2001.0,,,,,,,,,,Cold
+Robin_lodging_Donna,Robin,127.0,1.0,Lodging/residential,Dormitory,2515.0,27071.0,51.51878965384613,-0.1345562307692307,Europe/London,Yes,,,,,,,,Education,College/University,Gas,,,6.0,,,,,,,D,Cold
+Cockatoo_lodging_Tesha,Cockatoo,1424.0,15.0,Lodging/residential,Dormitory,2239.2,24103.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,1964.0,,,,,,,,,,Cold
+Cockatoo_lodging_Aimee,Cockatoo,1400.0,15.0,Lodging/residential,Dormitory,1966.6,21168.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,1928.0,,,,,,,,,,Cold
+Cockatoo_lodging_Ana,Cockatoo,1398.0,15.0,Lodging/residential,Dormitory,1885.1,20291.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,Yes,,,,,Education,College/University,,1925.0,,,,,,,,,,Cold
+Cockatoo_lodging_Judi,Cockatoo,1422.0,15.0,Lodging/residential,Dormitory,1846.5,19876.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,,,,,,Education,College/University,,1932.0,,,,,,,,,,Cold
+Cockatoo_lodging_Mandy,Cockatoo,1423.0,15.0,Lodging/residential,Dormitory,1698.0,18277.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,,,,,,Education,College/University,,1965.0,,,,,,,,,,Cold
+Lamb_lodging_Harley,Lamb,,5.0,Lodging/residential,Hotel,1587.0,17082.0,51.49783804108846,-3.186245571244898,Europe/London,Yes,,,,,,,Yes,Hospitality,Hotel,Gas,1919.0,,3.0,,,,,,,C,Cold
+Lamb_lodging_Burt,Lamb,671.0,5.0,Lodging/residential,Dormitory,705.0,7589.0,51.49783804108846,-3.186245571244898,Europe/London,Yes,,,,,,,Yes,Government,Social Services,Gas,1976.0,,3.0,34.0,,,,,,D,Cold
+Panther_lodging_Kara,Panther,95.0,0.0,Lodging/residential,Residence Hall,18667.3,200933.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,Yes,,,Yes,,,,,,2006.0,,,,,91,,,,,Hot-Humid
+Panther_lodging_Kirk,Panther,96.0,0.0,Lodging/residential,Residence Hall,18667.3,200933.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,Yes,,,,,,,,,2006.0,,,,,70,,,,,Hot-Humid
+Panther_lodging_Marisol,Panther,98.0,0.0,Lodging/residential,Residence Hall,18667.3,200933.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,Yes,,,,,,,,,2007.0,,,,,78,,,,,Hot-Humid
+Panther_lodging_Cora,Panther,97.0,0.0,Lodging/residential,Residence Hall,17433.0,187647.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,Yes,,Yes,Yes,,,,,,2007.0,,,,,151,,,,,Hot-Humid
+Panther_lodging_Sonja,Panther,58.0,0.0,Lodging/residential,Residence Hall,7746.2,83379.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,Yes,,,,2013.0,,,,,65,,,,,Hot-Humid
+Panther_lodging_Edison,Panther,57.0,0.0,Lodging/residential,Residence Hall,6072.0,65359.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,Yes,,,,2013.0,,,,,75,,,,,Hot-Humid
+Panther_lodging_Alita,Panther,56.0,0.0,Lodging/residential,Residence Hall	,5582.4,60088.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,Yes,,,,2013.0,,,,,63,,,Silver,,Hot-Humid
+Panther_lodging_Awilda,Panther,27.0,0.0,Lodging/residential,Residence Hall,5499.9,59200.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,1999.0,,,,,125,,,,,Hot-Humid
+Panther_lodging_Gale,Panther,90.0,0.0,Lodging/residential,Residence Hall,5499.9,59200.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,1999.0,,,,,147,,,,,Hot-Humid
+Panther_lodging_Cornelia,Panther,36.0,0.0,Lodging/residential,Residence Hall,4935.9,53130.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,2002.0,,,,,35,,,,,Hot-Humid
+Panther_lodging_Tracie,Panther,37.0,0.0,Lodging/residential,Residence Hall,4935.9,53130.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,2002.0,,,,,43,,,,,Hot-Humid
+Panther_lodging_Edmond,Panther,64.0,0.0,Lodging/residential,Residence Hall,4935.9,53130.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,2001.0,,,,,38,,,,,Hot-Humid
+Panther_lodging_Kaitlin,Panther,65.0,0.0,Lodging/residential,Residence Hall,4935.9,53130.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,2001.0,,,,,39,,,,,Hot-Humid
+Panther_lodging_Jana,Panther,34.0,0.0,Lodging/residential,Residence Hall,3969.8,42731.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,2002.0,,,,,70,,,,,Hot-Humid
+Panther_lodging_Floyd,Panther,62.0,0.0,Lodging/residential,Residence Hall,3969.8,42731.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,2001.0,,,,,116,,,,,Hot-Humid
+Panther_lodging_Teresita,Panther,35.0,0.0,Lodging/residential,Residence Hall,3866.3,41617.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,2002.0,,,,,61,,,,,Hot-Humid
+Panther_lodging_Jorge,Panther,63.0,0.0,Lodging/residential,Residence Hall,3866.3,41617.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,2001.0,,,,,61,,,,,Hot-Humid
+Panther_lodging_Hattie,Panther,33.0,0.0,Lodging/residential,Residence Hall,3594.0,38686.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,Yes,,,,2002.0,,,,,325,,,,,Hot-Humid
+Panther_lodging_Blaine,Panther,61.0,0.0,Lodging/residential,Residence Hall,3594.0,38686.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,Yes,,,,2001.0,,,,,299,,,,,Hot-Humid
+Panther_lodging_Fausto,Panther,66.0,0.0,Lodging/residential,Residence Hall,3459.8,37241.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,1981.0,,,,,76,,,,,Hot-Humid
+Panther_lodging_Else,Panther,85.0,0.0,Lodging/residential,Residence Hall,3459.8,37241.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,1981.0,,,,,77,,,,,Hot-Humid
+Panther_lodging_Willa,Panther,12.0,0.0,Lodging/residential,Residence Hall,3446.7,37100.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,1999.0,,,,,162,,,,,Hot-Humid
+Panther_lodging_Russell,Panther,6.0,0.0,Lodging/residential,Residence Hall,2594.4,27926.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,1981.0,,,,,58,,,,,Hot-Humid
+Panther_lodging_Myrtle,Panther,49.0,0.0,Lodging/residential,Residence Hall,2272.0,24456.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,,,,,1968.0,,,,,204,,,,,Hot-Humid
+Panther_lodging_Janice,Panther,67.0,0.0,Lodging/residential,Residence Hall,2272.0,24456.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,Yes,,,,,,1968.0,,,,,293,,,,,Hot-Humid
+Panther_lodging_Anastasia,Panther,77.0,0.0,Lodging/residential,Residence Hall,2272.0,24456.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,,,Yes,,,,1968.0,,,,,247,,,,,Hot-Humid
+Panther_lodging_Dianna,Panther,100.0,0.0,Lodging/residential,Residence Hall,2272.0,24456.0,28.5176885788321,-81.3790387999998,US/Eastern,Yes,,,,Yes,Yes,,,,,,1968.0,,,,,298,,,,,Hot-Humid
+Bull_lodging_Travis,Bull,927.0,9.0,Lodging/residential,Dormitory,69275.1,745671.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Fox_lodging_Helen,Fox,166.0,2.0,Lodging/residential,Dormitory,51394.9,553210.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,2009.0,,,,,,,,,,Mixed
+Rat_lodging_Ben,Rat,374.0,3.0,Lodging/residential,Other - Lodging/Residential,32516.0,350000.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,1949.0,,,,,,,,,,Mixed
+Bull_lodging_Melissa,Bull,971.0,9.0,Lodging/residential,Dormitory,27992.3,301307.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Dave,Bull,932.0,9.0,Lodging/residential,Dormitory,21733.4,233937.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Fox_lodging_Angla,Fox,225.0,2.0,Lodging/residential,Dormitory,20115.9,216526.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,1967.0,,,,,,,,,,Mixed
+Bear_lodging_Evan,Bear,614.0,4.0,Lodging/residential,Lodging/residential,17205.6,185200.0,37.87190340000004,-122.26072860000008,US/Pacific,Yes,,,,,,,,,,,1930.0,,8.0,,,,,,,,Mixed
+Bull_lodging_Caren,Bull,875.0,9.0,Lodging/residential,Dormitory,16509.6,177708.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Fox_lodging_Frances,Fox,240.0,2.0,Lodging/residential,Dormitory,10340.5,111304.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,1964.0,,,,,,,,,,Mixed
+Fox_lodging_Jina,Fox,239.0,2.0,Lodging/residential,Dormitory,9888.6,106440.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,1963.0,,,,,,,,,,Mixed
+Bear_lodging_Esperanza,Bear,647.0,4.0,Lodging/residential,Lodging/residential,8078.8,86959.0,37.87190340000004,-122.26072860000008,US/Pacific,Yes,,,,,,,,,,,1942.0,,5.0,,,,,,,,Mixed
+Bull_lodging_Hugo,Bull,949.0,9.0,Lodging/residential,Dormitory,8062.7,86786.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Fox_lodging_Stephen,Fox,167.0,2.0,Lodging/residential,Dormitory,8019.7,86323.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,1956.0,,,,,,,,,,Mixed
+Fox_lodging_Alana,Fox,202.0,2.0,Lodging/residential,Dormitory,6938.2,74682.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,2006.0,,,,,,,,,,Mixed
+Bear_lodging_Erick,Bear,578.0,4.0,Lodging/residential,Lodging/residential,6688.5,71994.0,37.87190340000004,-122.26072860000008,US/Pacific,Yes,,,,,,,,,,,2004.0,,4.0,,,,,,,,Mixed
+Bull_lodging_Perry,Bull,887.0,9.0,Lodging/residential,Dormitory,6480.4,69754.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Fox_lodging_Wallace,Fox,203.0,2.0,Lodging/residential,Dormitory,5885.2,63348.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,2007.0,,,,,,,,,,Mixed
+Fox_lodging_Winifred,Fox,205.0,2.0,Lodging/residential,Dormitory,5582.2,60086.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,,Yes,,,,,,Education,College/University,,2001.0,,,,,,,,,,Mixed
+Bull_lodging_Jeremiah,Bull,942.0,9.0,Lodging/residential,Dormitory,5326.5,57334.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Fox_lodging_Warren,Fox,228.0,2.0,Lodging/residential,Dormitory,4562.3,49108.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,1951.0,,,,,,,,,,Mixed
+Bull_lodging_Danielle,Bull,965.0,9.0,Lodging/residential,Dormitory,4188.6,45086.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Anibal,Bull,963.0,9.0,Lodging/residential,Dormitory,4160.6,44784.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Leonard,Bull,878.0,9.0,Lodging/residential,Dormitory,3831.4,41241.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Terence,Bull,885.0,9.0,Lodging/residential,Dormitory,3780.9,40697.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Carie,Bull,906.0,9.0,Lodging/residential,Dormitory,3683.5,39649.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Lettie,Bull,905.0,9.0,Lodging/residential,Dormitory,3683.4,39648.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Mixed
+Fox_lodging_Stephan,Fox,215.0,2.0,Lodging/residential,Dormitory,3382.2,36406.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,1940.0,,,,,,,,,,Mixed
+Fox_lodging_Morris,Fox,286.0,2.0,Lodging/residential,Dormitory,3051.0,32841.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,1935.0,,,,,,,,,,Mixed
+Rat_lodging_Christine,Rat,478.0,3.0,Lodging/residential,Other - Lodging/Residential,2906.3,31283.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,1935.0,,,,,,,,,,Mixed
+Fox_lodging_Isabell,Fox,204.0,2.0,Lodging/residential,Dormitory,2875.3,30949.0,33.42442530000004,-111.9281403999998,US/Mountain,Yes,Yes,Yes,,,,,,Education,College/University,,1951.0,,,,,,,,,,Mixed
+Bear_lodging_Dannie,Bear,581.0,4.0,Lodging/residential,Lodging/residential,2137.9,23012.0,37.87190340000004,-122.26072860000008,US/Pacific,Yes,,,,,,,,,,,1930.0,,3.0,,,,,,,,Mixed
+Rat_lodging_Marguerite,Rat,449.0,3.0,Lodging/residential,Other - Lodging/Residential,1703.8,18340.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,1900.0,,,,,,,,,,Mixed
+Rat_lodging_Ardell,Rat,436.0,3.0,Lodging/residential,Other - Lodging/Residential,1446.9,15574.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,,,,,,,,,,,Mixed
+Rat_lodging_Dwight,Rat,342.0,3.0,Lodging/residential,Other - Lodging/Residential,1432.6,15420.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,,,,,,,,,,,Mixed
+Rat_lodging_Marion,Rat,533.0,3.0,Lodging/residential,Other - Lodging/Residential,1105.5,11900.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Abby,Bull,936.0,9.0,Lodging/residential,Dormitory,1054.4,11350.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,,,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Elena,Bull,938.0,9.0,Lodging/residential,Dormitory,1043.0,11227.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,,,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Graciela,Bull,937.0,9.0,Lodging/residential,Dormitory,961.2,10346.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,,,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Charlotte,Bull,940.0,9.0,Lodging/residential,Dormitory,750.6,8079.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,,,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Xavier,Bull,941.0,9.0,Lodging/residential,Dormitory,750.6,8079.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,,,,,,,,,,,,,,,,,,,,Mixed
+Bull_lodging_Allen,Bull,939.0,9.0,Lodging/residential,Dormitory,748.0,8051.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,,,,,,,,,,,,,,,,,,,,Mixed
+Rat_lodging_Lakisha,Rat,345.0,3.0,Lodging/residential,Multifamily Housing,673.5,7250.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,,,,,,,,,,,Mixed
+Bobcat_lodging_Darin,Bobcat,1026.0,10.0,Lodging/residential,Residence Hall/Dormitory,8220.1,88480.0,,,US/Mountain,Yes,,,,Yes,,,Yes,,,,,,1.0,216.0,,,,,,,Unknown
+Eagle_lodging_Terri,Eagle,1280.0,14.0,Lodging/residential,Housing,7422.9,79900.0,,,US/Eastern,Yes,,Yes,,,,,,,,,,,,,,,,,,,Unknown
+Eagle_lodging_Stephanie,Eagle,1312.0,14.0,Lodging/residential,Housing,6967.7,75000.0,,,US/Eastern,Yes,Yes,Yes,,,,,,,,,,,,,,,,,,,Unknown
+Eagle_lodging_Garland,Eagle,,14.0,Lodging/residential,Housing,6700.0,72118.0,,,US/Eastern,Yes,,,,,,,,,,,,,,,,,,,,,Unknown
+Eagle_lodging_Andy,Eagle,1311.0,14.0,Lodging/residential,Housing,6205.4,66794.0,,,US/Eastern,Yes,Yes,Yes,,,,,,,,,,,,,,,,,,,Unknown
+Eagle_lodging_Casey,Eagle,1307.0,14.0,Lodging/residential,Housing,6132.8,66013.0,,,US/Eastern,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Unknown
+Eagle_lodging_Dawn,Eagle,1308.0,14.0,Lodging/residential,Housing,5785.9,62279.0,,,US/Eastern,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Unknown
+Eagle_lodging_Edgardo,Eagle,1309.0,14.0,Lodging/residential,Housing,5392.2,58041.0,,,US/Eastern,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Unknown
+Eagle_lodging_Trina,Eagle,1310.0,14.0,Lodging/residential,Housing,5320.9,57274.0,,,US/Eastern,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Unknown
+Eagle_lodging_Tressa,Eagle,1306.0,14.0,Lodging/residential,Housing,5032.7,54172.0,,,US/Eastern,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,,Unknown
+Bobcat_lodging_Nickolas,Bobcat,1025.0,10.0,Lodging/residential,Residence Hall/Dormitory,4834.1,52034.0,,,US/Mountain,Yes,,,,Yes,,,,,,,,,2.0,166.0,,,,,,,Unknown
+Eagle_lodging_Blake,Eagle,1305.0,14.0,Lodging/residential,Housing,3512.0,37803.0,,,US/Eastern,Yes,Yes,Yes,Yes,,,,,,,,,,,,,,,,,,Unknown
+Bobcat_lodging_Melaine,Bobcat,1027.0,10.0,Lodging/residential,Residence Hall/Dormitory,3294.8,35465.0,,,US/Mountain,Yes,,,,Yes,,,Yes,,,,,,2.0,0.0,,,,,,,Unknown

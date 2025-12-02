@@ -1,0 +1,31 @@
+{
+  "building_id": "Hog_lodging_Ora",
+  "model_type": "LSTM",
+  "lookback": 24,
+  "features": [
+    "airTemperature",
+    "windSpeed",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "input_shape": [
+    24,
+    5
+  ],
+  "epochs_trained": 23,
+  "val_metrics": {
+    "rmse": 61.62861499329496,
+    "mae": 52.279144192700784,
+    "r2": -0.8214249483022946,
+    "cvrmse": 24.740765326431504,
+    "nmbe": 17.540814434093004
+  },
+  "test_metrics": {
+    "rmse": 120.33804546751581,
+    "mae": 109.97383940754202,
+    "r2": -4.657174224932358,
+    "cvrmse": 56.758677176951146,
+    "nmbe": 51.86323444191954
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "building_id": "Fox_lodging_Helen",
+  "model_type": "LSTM",
+  "lookback": 24,
+  "features": [
+    "airTemperature",
+    "windSpeed",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "input_shape": [
+    24,
+    5
+  ],
+  "epochs_trained": 15,
+  "val_metrics": {
+    "rmse": 47.609954820151955,
+    "mae": 36.23414157475046,
+    "r2": 0.5731906853138931,
+    "cvrmse": 11.352302188989746,
+    "nmbe": 4.802722264522905
+  },
+  "test_metrics": {
+    "rmse": 158.01361481291553,
+    "mae": 132.7873590918044,
+    "r2": -1.5125933620871836,
+    "cvrmse": 48.34142466819088,
+    "nmbe": 38.64323569006615
+  }
+}

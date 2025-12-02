@@ -1,0 +1,31 @@
+{
+  "building_id": "Rat_lodging_Ben",
+  "model_type": "LSTM",
+  "lookback": 24,
+  "features": [
+    "airTemperature",
+    "windSpeed",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "input_shape": [
+    24,
+    5
+  ],
+  "epochs_trained": 18,
+  "val_metrics": {
+    "rmse": 46.30044884963624,
+    "mae": 37.51526441281341,
+    "r2": 0.6281361083501387,
+    "cvrmse": 14.544538071057161,
+    "nmbe": 7.696976125046646
+  },
+  "test_metrics": {
+    "rmse": 33.360598343246174,
+    "mae": 26.490635328189345,
+    "r2": -0.2644738402760656,
+    "cvrmse": 13.353673448797926,
+    "nmbe": 3.460999746911981
+  }
+}

@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Surrogate Model-Based Optimization Framework for Building Energy Management"
+version: 1.0.0
+date-released: 2025-12-02
+authors:
+  - family-names: "Research"
+    given-names: "Team"
+abstract: "A comprehensive surrogate model-based optimization framework for building HVAC control using the Building Data Genome Project 2 (BDG2) dataset. Achieves 6-7% energy and cost savings while maintaining thermal comfort."
+keywords:
+  - building energy optimization
+  - surrogate modeling
+  - genetic algorithms
+  - HVAC control
+  - machine learning
+  - BDG2
+license: MIT
+repository-code: "https://github.com/your-repo/building-energy-optimization"

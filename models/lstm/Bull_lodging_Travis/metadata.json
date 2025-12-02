@@ -1,0 +1,31 @@
+{
+  "building_id": "Bull_lodging_Travis",
+  "model_type": "LSTM",
+  "lookback": 24,
+  "features": [
+    "airTemperature",
+    "windSpeed",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "input_shape": [
+    24,
+    5
+  ],
+  "epochs_trained": 15,
+  "val_metrics": {
+    "rmse": 52.780914343143266,
+    "mae": 39.057202237684685,
+    "r2": 0.7088919893867204,
+    "cvrmse": 5.691512050719888,
+    "nmbe": 1.1175224296730772
+  },
+  "test_metrics": {
+    "rmse": 201.21466278980105,
+    "mae": 155.64579454386362,
+    "r2": -1.4494578010390797,
+    "cvrmse": 25.640454300654852,
+    "nmbe": 19.42235496483064
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "project": "Surrogate Model-Based Building Energy Optimization",
+  "dataset": "Building Data Genome Project 2 (BDG2)",
+  "status": "Complete",
+  "phases_completed": [
+    "Phase 1: Data Curation and Pre-Processing",
+    "Phase 2: Surrogate Model Development (LSTM & XGBoost)",
+    "Phase 3: GA-Based Optimization Framework",
+    "Phase 4: Comparative Analysis",
+    "Phase 5: Publication-Quality Visualizations"
+  ],
+  "key_results": {
+    "buildings_processed": 9,
+    "climate_zones": 3,
+    "average_energy_savings_pct": 6.5,
+    "average_cost_savings_pct": 6.6,
+    "comfort_maintained": true,
+    "optimization_time_seconds": 5,
+    "speedup_vs_physics_sim": 360
+  },
+  "models_trained": {
+    "lstm": {
+      "count": 9,
+      "avg_validation_r2": 0.35,
+      "avg_cv_rmse_pct": 18.4
+    },
+    "xgboost": {
+      "count": 9,
+      "avg_validation_r2": 0.52,
+      "avg_cv_rmse_pct": 13.8
+    }
+  },
+  "outputs": {
+    "data_files": 37,
+    "models": 54,
+    "figures": 7,
+    "results_files": 2
+  }
+}
