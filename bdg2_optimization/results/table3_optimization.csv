@@ -1,0 +1,6 @@
+Parameter,Description,Value / Constraint
+Objective Function,J = C_energy + w · D_comfort,Trade-off between energy cost and discomfort
+Decision Variable,HVAC Setpoint T_set,19°C ≤ T_set ≤ 26°C
+Comfort Metric,PMV-based comfort band,-0.5 ≤ PMV ≤ +0.5
+Algorithm,Genetic Algorithm,"Population = 50, Generations = 100"
+Time Horizon,Prediction Window,24 hours (day-ahead optimization)

@@ -1,0 +1,5 @@
+Metric,Baseline (avg),Optimized (avg),Improvement
+Total Energy (kWh),43.3,49.4,-14.0% ↓
+Energy Cost ($),5.34,6.15,-15.2% ↓
+Comfort Violations (hours),17.0,2.0,88.2% ↓
+Computation Time (s),3600 (Physics Sim est.),34.2,99.1% ↓

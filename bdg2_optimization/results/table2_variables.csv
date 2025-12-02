@@ -1,0 +1,8 @@
+Variable Category,Feature Name,Unit,Source,Relevance
+Environmental,Outdoor Air Temperature,°C,BDG2 Weather,Core climatic driver for heating/cooling demand
+Environmental,Relative Humidity,%,BDG2 Weather (derived),Influences latent loads and perceived comfort
+Environmental,Wind Speed,m/s,BDG2 Weather,Affects building infiltration and heat loss
+Temporal,Hour of Day,0-23,Time Index,Represents daily occupancy and behavior patterns
+Temporal,Day of Week,1-7,Time Index,Encodes weekly usage patterns (workdays vs weekends)
+Control,Cooling/Heating Setpoint,°C,Control Schedule,Primary optimization variable and control parameter
+Historical,Lagged Energy (1-24h),kWh,BDG2 Meters,Captures building thermal inertia and patterns
