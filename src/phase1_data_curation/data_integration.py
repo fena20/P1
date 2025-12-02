@@ -128,7 +128,12 @@ def merge_meter_weather(meter_data, weather_data):
     
     # Resample weather data to hourly if needed
     if weather_data.index.freq is None:
-        weather_data = weather_data.resample('H').mean()
+        # Only resample numeric columns
+        numeric_cols = weather_data.select_dtypes(include=[np.number]).columns
+        if len(numeric_cols) > 0:
+            weather_data = weather_data[numeric_cols].resample('H').mean()
+        else:
+            weather_data = weather_data.resample('H').first()
     
     # Merge on timestamp
     merged = meter_data.join(weather_data, how='left', rsuffix='_weather')
