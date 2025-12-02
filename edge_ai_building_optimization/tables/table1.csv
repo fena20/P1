@@ -1,0 +1,9 @@
+Variable,Mean,Std,Min,Max
+Energy Use (kWh),47.91,26.757,7.009,160.208
+Air Temperature,14.952,11.383,-9.902,39.643
+Dew Temperature,8.48,11.526,-18.111,34.296
+Wind Speed,3.116,1.801,0.001,10.024
+Rolling Mean 24h (kWh),47.908,25.422,9.069,131.114
+Rolling Std 24h (kWh),7.309,4.379,0.009,23.242
+Peak Usage Ratio,0.252,0.434,0.0,1.0
+Building Size (sq ft),2506.14,1286.87,592.0,4864.0
