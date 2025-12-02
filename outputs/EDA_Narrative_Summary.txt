@@ -1,0 +1,110 @@
+
+# EXPLORATORY DATA ANALYSIS (EDA) - NARRATIVE SUMMARY
+
+## Dataset Description
+
+This study analyzes hourly electricity consumption data from the Building Data Genome Project 2 
+(BDG2), focusing on 40 office buildings at site Eagle. 
+The analysis period spans from January 01, 2016 
+to December 31, 2017, comprising 658,750 hourly observations.
+
+The selected subset represents typical commercial office buildings. All buildings are equipped  
+with electricity meters recording whole-building consumption at hourly resolution.
+
+## Descriptive Statistics (Table 1)
+
+Table 1 presents comprehensive descriptive statistics for key variables in the analysis. Hourly 
+electricity consumption exhibits a mean of 121.92 kWh with substantial variability 
+(σ = 120.69 kWh), reflecting the diversity in building sizes and operational schedules. 
+The distribution shows positive skewness (2.01), indicating occasional high-demand 
+periods that exceed typical consumption patterns.
+
+When normalized by floor area, electricity use intensity averages 
+0.0186 kWh/m²·h, consistent with literature values for commercial office buildings. 
+The high kurtosis (1.95) suggests the presence of both heavy-tailed behavior and 
+outlier events, warranting careful data quality assessment.
+
+Weather variables demonstrate expected seasonal and diurnal patterns. Outdoor air temperature 
+ranges from -15.6°C to 35.6°C (mean: 13.2°C), encompassing winter 
+heating and summer cooling seasons. The moderate standard deviation (10.1°C) indicates 
+substantial seasonal variation.
+
+## Temporal Patterns (Figures 1 and 2)
+
+Figure 1 illustrates the coupling between electricity use and outdoor temperature during a 
+representative week for a typical office building. The time series reveals distinct 
+weekday-weekend patterns, with weekday consumption showing pronounced diurnal cycles 
+corresponding to occupancy schedules. Morning ramp-up begins around 6-7 AM, reaching peak 
+demand during midday hours, followed by evening setback after 6 PM. Nighttime baseload reflects 
+continuous HVAC, lighting controls, and plug loads from IT equipment.
+
+Figure 2 quantifies the average hourly load profile across all buildings and days in the analysis 
+period. The profile exhibits classic commercial building characteristics: baseload consumption 
+during nighttime hours (0-6 AM), rapid morning ramp-up between 6-9 AM, sustained plateau during 
+business hours (9 AM - 5 PM), and gradual evening setback after 6 PM. The 95% confidence intervals 
+indicate moderate variability across days, reflecting both weather-driven variations and 
+operational differences between buildings.
+
+## Energy-Weather Correlations (Figure 3)
+
+The correlation heatmap (Figure 3) reveals physically meaningful relationships between electricity 
+consumption and meteorological drivers. Daily electricity use shows correlation with air 
+temperature, consistent with HVAC-driven energy patterns in commercial buildings. The correlation 
+matrix helps identify the key weather drivers that should be included in subsequent predictive 
+models.
+
+Dew point temperature, a proxy for humidity and latent cooling load, exhibits correlation with 
+electricity use. Wind speed and sea level pressure show varying levels of correlation with 
+electricity demand. These insights inform the physics-based feature engineering required for 
+the modeling phase.
+
+## Data Quality and Outliers (Figure 4 and Table 2)
+
+Figure 4 presents distributional characteristics of hourly electricity use, stratified by 
+weekday/weekend and seasonal patterns. The boxplots reveal outliers (red points) in both weekday 
+and weekend distributions, representing approximately 
+6.29% 
+of observations. These outliers likely reflect legitimate operational events (e.g., special events, 
+extended operating hours, HVAC system startups) rather than measurement errors.
+
+Table 2 quantifies data quality metrics for all analyzed variables. Missing data rates are minimal 
+across energy and weather variables, indicating high data reliability. Unrealistic values are rare: 
+electricity use shows no negative readings, and all weather variables fall within physically 
+plausible ranges.
+
+Outlier detection using the interquartile range (IQR) method identifies outliers exceeding typical 
+ranges. Visual inspection (Figure 4) confirms these outliers represent the upper tail of the 
+distribution rather than erroneous data points. For subsequent modeling, we retain these 
+observations as they capture important variability in building operations, but robust regression 
+techniques will be employed to mitigate their influence on model parameters.
+
+## Summary and Implications for Modeling
+
+The exploratory analysis reveals several key insights that inform subsequent modeling and optimization:
+
+1. **Strong temporal structure**: The pronounced daily and weekly patterns suggest that time-based 
+   features (hour of day, day of week) will be critical predictors in load forecasting models.
+
+2. **Weather dependence**: The correlations between electricity use and weather variables indicate 
+   that temperature and humidity are important drivers. Physics-informed features such as heating 
+   and cooling degree hours should be constructed.
+
+3. **Non-Gaussian distributions**: High skewness and kurtosis in electricity use distributions 
+   suggest that quantile regression or probabilistic forecasting approaches may be more appropriate 
+   than standard least-squares methods for capturing the full range of building behavior.
+
+4. **High data quality**: The minimal missing data and absence of unrealistic values enable 
+   direct application of machine learning methods without extensive imputation or data cleaning.
+
+5. **Building diversity**: Substantial inter-building variability (visible in outliers and confidence 
+   intervals) motivates the inclusion of building metadata (floor area, sub-type) as features to 
+   capture heterogeneity in the building stock.
+
+These findings establish a solid foundation for Phase 2 (predictive modeling) and Phase 3 
+(multi-objective optimization), where we will develop quantile-based forecasting models and 
+explore energy-comfort trade-offs to support low-carbon building operations aligned with SDG 7 
+(Affordable and Clean Energy) and SDG 11 (Sustainable Cities and Communities).
+
+---
+End of Phase 1 EDA Report
+Generated: 2025-12-02 11:02:40

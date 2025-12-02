@@ -1,0 +1,8 @@
+Variable,Description,Unit,Mean,Median,Std,Skewness,Kurtosis
+Hourly electricity use,Total building electricity consumption per hour,kWh,121.92,79.20,120.69,2.01,4.47
+Electricity use intensity,Electricity consumption per unit floor area per hour,kWh/m²·h,0.02,0.02,0.01,1.23,1.95
+Outdoor air temperature,Dry-bulb air temperature at site,°C,13.23,13.30,10.08,-0.14,-0.84
+Dew point temperature,Temperature at which air becomes saturated,°C,6.27,7.20,10.62,-0.34,-0.80
+Wind speed,Horizontal wind velocity at site,m/s,3.08,2.60,2.06,0.69,0.73
+Sea level pressure,Atmospheric pressure adjusted to sea level,hPa,1016.14,1016.00,7.59,-0.08,0.60
+Building floor area,Gross floor area of office buildings,m²,6434,5550,4415,1.39,2.35
