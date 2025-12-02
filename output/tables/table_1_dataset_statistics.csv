@@ -1,0 +1,9 @@
+Variable,Mean,Std,Min,Max,Skewness,Kurtosis
+Meter Reading,259.24,129.64,11.70,737.87,0.279,-0.744
+Air Temperature,15.23,9.56,-10.18,38.97,-0.031,-0.893
+Solar Radiation,83.60,146.00,0.00,774.16,2.046,3.777
+Relative Humidity,59.83,17.41,20.00,100.00,0.024,-0.746
+Hdd,5.56,6.47,0.00,28.18,0.872,-0.420
+Cdd,0.89,2.19,0.00,14.97,2.811,7.775
+Peak Consumption Hour,20,-,-,-,-,-
+Peak Consumption Day,Tue,-,-,-,-,-
