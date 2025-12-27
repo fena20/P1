@@ -23,7 +23,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split, learning_curve
+from sklearn.model_selection import learning_curve, TimeSeriesSplit
 from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor, StackingRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -73,6 +73,8 @@ df['date'] = pd.to_datetime(df['date'])
 df.set_index('date', inplace=True)
 
 # Feature engineering (consistent with main model)
+LAG_STEPS = list(range(1, 37))  # 10-minute steps up to 6 hours
+
 def create_features(df):
     df_feat = df.copy()
     df_feat['hour'] = df_feat.index.hour
@@ -86,21 +88,25 @@ def create_features(df):
     df_feat['T_indoor_avg'] = df_feat[indoor_temps].mean(axis=1)
     df_feat['DeltaT'] = df_feat['T_indoor_avg'] - df_feat['T_out']
     
-    for lag in [1, 2, 3]:
+    for lag in LAG_STEPS:
         df_feat[f'Appliances_lag{lag}'] = df_feat['Appliances'].shift(lag)
     
-    df_feat['Appliances_roll6_mean'] = df_feat['Appliances'].rolling(6).mean()
+    df_feat['Appliances_roll6_mean'] = df_feat['Appliances'].shift(1).rolling(6).mean()
     df_feat = df_feat.dropna()
     return df_feat
 
 df_feat = create_features(df)
 
+def time_series_split(X, y, test_size=0.25):
+    split_idx = int(len(X) * (1 - test_size))
+    return X[:split_idx], X[split_idx:], y[:split_idx], y[split_idx:]
+
 # Prepare data
-feature_cols = [c for c in df_feat.columns if c not in ['Appliances', 'lights', 'rv1', 'rv2', 'hour', 'day_of_week']]
+feature_cols = [c for c in df_feat.columns if c not in ['Appliances', 'rv1', 'rv2', 'hour', 'day_of_week']]
 X = df_feat[feature_cols].values
 y = df_feat['Appliances'].values
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+X_train, X_test, y_train, y_test = time_series_split(X, y, test_size=0.25)
 
 scaler_X = StandardScaler()
 scaler_y = StandardScaler()
@@ -119,7 +125,11 @@ estimators = [
     ('xgb', xgb.XGBRegressor(n_estimators=100, max_depth=6, learning_rate=0.1, random_state=42, n_jobs=-1)),
     ('lgb', lgb.LGBMRegressor(n_estimators=100, max_depth=6, learning_rate=0.1, random_state=42, verbose=-1))
 ]
-baseline_model = StackingRegressor(estimators=estimators, final_estimator=Ridge(alpha=1.0), cv=3)
+baseline_model = StackingRegressor(
+    estimators=estimators,
+    final_estimator=Ridge(alpha=1.0),
+    cv=TimeSeriesSplit(n_splits=3)
+)
 baseline_model.fit(X_train_scaled, y_train_scaled)
 
 y_pred_baseline = baseline_model.predict(X_test_scaled)
@@ -169,7 +179,7 @@ feature_groups = {
     'Outdoor_Weather': ['T_out', 'RH_out', 'Press_mm_hg', 'Windspeed', 'Visibility', 'Tdewpoint'],
     'Humidity': ['RH_1', 'RH_2', 'RH_3', 'RH_4', 'RH_5', 'RH_6', 'RH_7', 'RH_8', 'RH_9'],
     'Thermal': ['DeltaT', 'T6'],
-    'Lag_Features': ['Appliances_lag1', 'Appliances_lag2', 'Appliances_lag3', 'Appliances_roll6_mean']
+    'Lag_Features': ['Appliances_lag1', 'Appliances_lag2', 'Appliances_lag3', 'Appliances_lag6', 'Appliances_roll6_mean']
 }
 
 ablation_results = {'Full Model': baseline_rmse}
@@ -245,7 +255,7 @@ train_sizes_abs, train_scores, test_scores = learning_curve(
     xgb.XGBRegressor(n_estimators=100, max_depth=6, learning_rate=0.1, random_state=42, n_jobs=-1),
     X_train_scaled, y_train_scaled,
     train_sizes=train_sizes,
-    cv=5,
+    cv=TimeSeriesSplit(n_splits=5),
     scoring='neg_root_mean_squared_error',
     n_jobs=-1
 )
@@ -330,8 +340,8 @@ for resolution in resolutions:
     X_res = df_res_feat[feature_cols].values
     y_res = df_res_feat['Appliances'].values
     
-    X_train_res, X_test_res, y_train_res, y_test_res = train_test_split(
-        X_res, y_res, test_size=0.25, random_state=42
+    X_train_res, X_test_res, y_train_res, y_test_res = time_series_split(
+        X_res, y_res, test_size=0.25
     )
     
     scaler_X_res = StandardScaler()

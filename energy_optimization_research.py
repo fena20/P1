@@ -27,7 +27,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Machine Learning
-from sklearn.model_selection import train_test_split, cross_val_score, KFold
+from sklearn.model_selection import TimeSeriesSplit
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor, StackingRegressor
@@ -102,9 +102,13 @@ df.set_index('date', inplace=True)
 
 print(f"\n✓ Dataset loaded: {len(df):,} observations")
 
-# Store original energy for baseline comparison
+# Store original energy for baseline comparison (Appliances proxy)
 baseline_energy = df['Appliances'].copy()
 total_baseline_energy_kwh = baseline_energy.sum() / 1000  # Convert Wh to kWh
+
+def time_series_split(X, y, test_size=0.25):
+    split_idx = int(len(X) * (1 - test_size))
+    return X[:split_idx], X[split_idx:], y[:split_idx], y[split_idx:]
 
 def create_physics_features(df):
     """
@@ -163,7 +167,8 @@ def create_physics_features(df):
     
     # 3. LAG FEATURES (Thermal Inertia)
     print("[3] Lag Features (Thermal Inertia)...")
-    for lag in [1, 2, 3, 6]:  # 10min, 20min, 30min, 1hour lags
+    lag_steps = [1, 6, 12, 18, 24, 30, 36]  # 10min steps up to 6 hours
+    for lag in lag_steps:
         df_feat[f'Appliances_lag{lag}'] = df_feat['Appliances'].shift(lag)
         df_feat[f'T_indoor_lag{lag}'] = df_feat['T_indoor_avg'].shift(lag)
         df_feat[f'DeltaT_lag{lag}'] = df_feat['DeltaT'].shift(lag)
@@ -171,8 +176,8 @@ def create_physics_features(df):
     # 4. ROLLING STATISTICS (Smoothed features)
     print("[4] Rolling Statistics...")
     for window in [6, 12]:  # 1-hour, 2-hour windows
-        df_feat[f'Appliances_roll{window}_mean'] = df_feat['Appliances'].rolling(window).mean()
-        df_feat[f'Appliances_roll{window}_std'] = df_feat['Appliances'].rolling(window).std()
+        df_feat[f'Appliances_roll{window}_mean'] = df_feat['Appliances'].shift(1).rolling(window).mean()
+        df_feat[f'Appliances_roll{window}_std'] = df_feat['Appliances'].shift(1).rolling(window).std()
         df_feat[f'T_outdoor_roll{window}_mean'] = df_feat['T_out'].rolling(window).mean()
     
     # 5. INTERACTION FEATURES
@@ -207,14 +212,14 @@ feature_groups = {
 }
 
 # Select features for modeling
-exclude_cols = ['Appliances', 'lights', 'rv1', 'rv2', 'hour', 'day_of_week', 'month']
+exclude_cols = ['Appliances', 'rv1', 'rv2', 'hour', 'day_of_week', 'month']
 feature_cols = [c for c in df_engineered.columns if c not in exclude_cols]
 
 X = df_engineered[feature_cols].values
 y = df_engineered['Appliances'].values
 
-# Train/Test Split (75/25)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+# Train/Test Split (75/25, time-ordered)
+X_train, X_test, y_train, y_test = time_series_split(X, y, test_size=0.25)
 
 # Scaling
 scaler_X = StandardScaler()
@@ -447,10 +452,10 @@ def train_quantile_tabnet(X_train, y_train, X_val, y_val, epochs=100, batch_size
     
     return model, history, training_time
 
-# Split training data for validation
-X_train_sub, X_val, y_train_sub, y_val = train_test_split(
-    X_train_scaled, y_train_scaled, test_size=0.2, random_state=42
-)
+# Split training data for validation (time-ordered)
+val_split_idx = int(len(X_train_scaled) * 0.8)
+X_train_sub, X_val = X_train_scaled[:val_split_idx], X_train_scaled[val_split_idx:]
+y_train_sub, y_val = y_train_scaled[:val_split_idx], y_train_scaled[val_split_idx:]
 
 print("\n[INFO] Training Quantile TabNet...")
 tabnet_model, tabnet_history, tabnet_time = train_quantile_tabnet(
@@ -579,7 +584,7 @@ estimators = [
 stacking_model = StackingRegressor(
     estimators=estimators,
     final_estimator=Ridge(alpha=1.0),
-    cv=3
+    cv=TimeSeriesSplit(n_splits=3)
 )
 stacking_model.fit(X_train_scaled, y_train_scaled)
 stacking_pred_scaled = stacking_model.predict(X_test_scaled)
@@ -613,6 +618,9 @@ class EnergyComfortProblem(Problem):
     Key Insight: The baseline represents unoptimized (constant 21-22°C) operation.
     Optimization allows adaptive setpoints that reduce energy during unoccupied periods
     while maintaining comfort during occupied hours.
+
+    Note: Energy objective uses Appliances as a proxy load for illustrative
+    optimization only (not a calibrated HVAC energy model).
     """
     
     def __init__(self, baseline_energy, indoor_temps, outdoor_temp, humidity, n_zones=8):

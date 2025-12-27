@@ -235,12 +235,12 @@ $$
 
 **Implementation**:
 ```python
-for lag in [1, 2, 3, 6]:  # 10min, 20min, 30min, 1hour
+for lag in [1, 6, 12, 18, 24, 30, 36]:  # 10-min steps up to 6 hours
     df[f'Appliances_lag{lag}'] = df['Appliances'].shift(lag)
     df[f'T_indoor_lag{lag}'] = df['T_indoor_avg'].shift(lag)
 ```
 
-**Justification**: Building thermal time constants typically range from 1-6 hours, making lag features up to t-6 (1 hour at 10-min resolution) physically meaningful.
+**Justification**: Building thermal time constants typically range from 1-6 hours, making lag features up to t-36 (6 hours at 10-min resolution) physically meaningful.
 
 #### 3.2.4 Rolling Statistics
 
@@ -248,9 +248,10 @@ Capture smoothed trends and variability:
 
 ```python
 for window in [6, 12]:  # 1-hour, 2-hour windows
-    df[f'E_roll{window}_mean'] = df['Appliances'].rolling(window).mean()
-    df[f'E_roll{window}_std'] = df['Appliances'].rolling(window).std()
+    df[f'E_roll{window}_mean'] = df['Appliances'].shift(1).rolling(window).mean()
+    df[f'E_roll{window}_std'] = df['Appliances'].shift(1).rolling(window).std()
 ```
+Rolling features are shifted by one step to avoid target leakage at time $t$.
 
 #### 3.2.5 Interaction Features
 
@@ -267,10 +268,12 @@ df['DeltaT_wind'] = df['DeltaT'] * df['Windspeed']  # Convective heat loss
 |----------|----------|-------|----------------|
 | Cyclical Temporal | hour_sin/cos, dow_sin/cos, month_sin/cos | 6 | Periodicity preservation |
 | Thermodynamic | Tdp, ΔT, HeatIndex | 12 | Heat transfer laws |
-| Lag | E_lag1-6, T_lag1-6 | 12 | Thermal inertia |
+| Lag | E_lag1-36, T_lag1-36, ΔT_lag1-36 | 21 | Thermal inertia |
 | Rolling | mean, std (1h, 2h) | 8 | Trend smoothing |
 | Interaction | T×RH, ΔT×wind | 4 | Non-linear coupling |
-| **Total Engineered** | | **42** | |
+| **Total Engineered** | | **51** | |
+
+The original **lights** sub-meter is retained as a predictor to match the reference baseline features.
 
 ---
 
@@ -412,7 +415,7 @@ $$
 
 #### 5.1.2 Objective Functions
 
-**Objective 1: Minimize Energy Consumption**
+**Objective 1: Minimize Energy Consumption (proxy)**
 
 $$
 f_1(\mathbf{x}) = E_{baseline} \cdot \left(1 - \eta_{setback} - \eta_{zone} - \eta_{schedule}\right)
@@ -422,6 +425,8 @@ where:
 - $\eta_{setback}$: Savings from temperature setback (5% per °C)
 - $\eta_{zone}$: Savings from zone differentiation
 - $\eta_{schedule}$: Savings from occupancy-based scheduling
+
+**Note**: $E_{baseline}$ is derived from *Appliances* in the UCI dataset and is used as a proxy load for illustrative optimization; it is not a calibrated HVAC energy model.
 
 **Objective 2: Minimize Thermal Discomfort**
 
@@ -678,10 +683,10 @@ if torch.cuda.is_available():
 
 ### 8.4 Data Split Protocol
 
-- Training: 75%
-- Testing: 25%
-- Validation (TabNet): 20% of training
-- Cross-validation: 3-fold (Stacking)
+- Training: first 75% of the time series (chronological)
+- Testing: last 25% of the time series (chronological)
+- Validation (TabNet): last 20% of the training window
+- Cross-validation: blocked/TimeSeriesSplit (3 folds)
 
 ---
 
@@ -689,13 +694,10 @@ if torch.cuda.is_available():
 
 ### 9.1 Significance Testing
 
-Paired t-test comparing TabNet vs. Stacking:
+We use time-series aware comparisons to avoid independence violations:
 
-$$
-t = \frac{\bar{d}}{s_d / \sqrt{n}}
-$$
-
-where $\bar{d}$ is the mean difference in RMSE across folds.
+- **Diebold–Mariano test** on out-of-sample forecast errors.
+- **Moving block bootstrap** for confidence intervals of RMSE differences.
 
 ### 9.2 Confidence Intervals
 
@@ -707,11 +709,11 @@ $$
 
 ### 9.3 Cross-Validation Results
 
-| Model | RMSE (mean ± std) | p-value vs. TabNet |
-|-------|-------------------|-------------------|
-| TabNet | 36.91 ± 0.74 | - |
-| Stacking | 42.46 ± 0.85 | < 0.001 |
-| XGBoost | 43.76 ± 1.31 | < 0.001 |
+| Model | RMSE (mean ± std) |
+|-------|-------------------|
+| TabNet | 36.91 ± 0.74 |
+| Stacking | 42.46 ± 0.85 |
+| XGBoost | 43.76 ± 1.31 |
 
 ---
 

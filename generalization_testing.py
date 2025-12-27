@@ -29,6 +29,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor, StackingRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.model_selection import TimeSeriesSplit
 import xgboost as xgb
 import lightgbm as lgb
 import joblib
@@ -161,8 +162,7 @@ def align_to_stacking_schema(new_df, required_features=REQUIRED_FEATURES,
     original_freq = pd.infer_freq(aligned_df.index[:100]) if len(aligned_df) > 100 else None
     if original_freq != target_freq:
         try:
-            aligned_df = aligned_df.resample(target_freq).mean()
-            aligned_df = aligned_df.interpolate(method='linear')
+            aligned_df = aligned_df.resample(target_freq).mean().ffill()
             print(f"  ✓ Resampled from {original_freq} to {target_freq}")
         except:
             print(f"  ⚠ Could not resample, keeping original frequency")
@@ -225,8 +225,10 @@ def align_to_stacking_schema(new_df, required_features=REQUIRED_FEATURES,
     if missing_features:
         print(f"  ✓ Imputed {len(missing_features)} missing features: {missing_features[:5]}...")
     
-    # Step 6: Handle missing values
-    aligned_df = aligned_df.fillna(method='ffill').fillna(method='bfill')
+    # Step 6: Handle missing values (avoid future leakage)
+    aligned_df = aligned_df.ffill()
+    numeric_medians = aligned_df.median(numeric_only=True)
+    aligned_df = aligned_df.fillna(numeric_medians)
     
     # Step 7: Ensure correct column order (preserve target column)
     # First check if Appliances exists with different name
@@ -265,6 +267,8 @@ df_original.set_index('date', inplace=True)
 print(f"✓ Original dataset loaded: {len(df_original)} observations")
 
 # Create physics-informed features (same as training)
+LAG_STEPS = list(range(1, 37))  # 10-minute steps up to 6 hours
+
 def create_features(df):
     """Create physics-informed features for the model."""
     df_feat = df.copy()
@@ -292,12 +296,12 @@ def create_features(df):
     
     # Lag features
     if 'Appliances' in df_feat.columns:
-        for lag in [1, 2, 3]:
+        for lag in LAG_STEPS:
             df_feat[f'Appliances_lag{lag}'] = df_feat['Appliances'].shift(lag)
     
     # Rolling features
     if 'Appliances' in df_feat.columns:
-        df_feat['Appliances_roll6_mean'] = df_feat['Appliances'].rolling(6).mean()
+        df_feat['Appliances_roll6_mean'] = df_feat['Appliances'].shift(1).rolling(6).mean()
     
     df_feat = df_feat.dropna()
     return df_feat
@@ -305,7 +309,7 @@ def create_features(df):
 df_original_feat = create_features(df_original)
 
 # Prepare features for original model
-feature_cols = [c for c in df_original_feat.columns if c not in ['Appliances', 'lights', 'rv1', 'rv2', 'hour', 'day_of_week']]
+feature_cols = [c for c in df_original_feat.columns if c not in ['Appliances', 'rv1', 'rv2', 'hour', 'day_of_week']]
 X_original = df_original_feat[feature_cols].values
 y_original = df_original_feat['Appliances'].values
 
@@ -318,9 +322,12 @@ y_original_scaled = scaler_y.fit_transform(y_original.reshape(-1, 1)).ravel()
 # Train Stacking Model
 print("\n[INFO] Training Stacking Model on original data...")
 
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(
-    X_original_scaled, y_original_scaled, test_size=0.25, random_state=42
+def time_series_split(X, y, test_size=0.25):
+    split_idx = int(len(X) * (1 - test_size))
+    return X[:split_idx], X[split_idx:], y[:split_idx], y[split_idx:]
+
+X_train, X_test, y_train, y_test = time_series_split(
+    X_original_scaled, y_original_scaled, test_size=0.25
 )
 
 estimators = [
@@ -331,7 +338,7 @@ estimators = [
 stacking_model = StackingRegressor(
     estimators=estimators,
     final_estimator=Ridge(alpha=1.0),
-    cv=3
+    cv=TimeSeriesSplit(n_splits=3)
 )
 stacking_model.fit(X_train, y_train)
 
@@ -391,8 +398,8 @@ df_kitakyushu = pd.DataFrame(kita_data)
 df_kitakyushu.set_index('datetime', inplace=True)
 df_kitakyushu = df_kitakyushu.dropna()
 
-# Resample to 10-minute intervals (interpolate)
-df_kitakyushu = df_kitakyushu.resample('10T').interpolate(method='linear')
+# Resample to 10-minute intervals (forward fill to avoid leakage)
+df_kitakyushu = df_kitakyushu.resample('10T').ffill()
 
 # Take a representative subset (6 months)
 df_kitakyushu = df_kitakyushu['2004-01-01':'2004-06-30']

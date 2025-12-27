@@ -47,6 +47,7 @@ df['date'] = pd.to_datetime(df['date'])
 
 # Calculate baseline metrics
 baseline_daily_kwh = df['Appliances'].sum() / 1000 / (len(df) / (6*24))
+# Appliances is a proxy for illustrative optimization, not calibrated HVAC energy.
 print(f"\n✓ Baseline Daily Energy: {baseline_daily_kwh:.2f} kWh")
 
 class EnhancedEnergyProblem(Problem):
