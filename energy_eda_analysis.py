@@ -112,11 +112,15 @@ LOCATION_DESCRIPTIONS = {
 
 # Load data
 print("\n[INFO] Loading dataset...")
-df = pd.read_csv('energydata_complete.csv')
-
-# Parse datetime
-df['date'] = pd.to_datetime(df['date'])
-df.set_index('date', inplace=True)
+# Use pipeline_core for consistent loading
+try:
+    import pipeline_core
+    df = pipeline_core.load_data('energydata_complete.csv')
+except ImportError:
+    # Fallback if pipeline_core not in path (though it should be)
+    df = pd.read_csv('energydata_complete.csv')
+    df['date'] = pd.to_datetime(df['date'])
+    df.set_index('date', inplace=True)
 
 # Create mapped column names for better interpretability
 df_mapped = df.rename(columns=SENSOR_MAPPING)
